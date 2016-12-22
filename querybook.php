@@ -97,7 +97,7 @@ function getCategorys()
     // 宣告一個陣列變數 $recordset, 存放查詢所得的紀錄集
     $categorys = array();
     // 定義 SQL 命令的字串變數
-    $sql = 'SELECT * FROM CATEGORY';
+    $sql = 'SELECT * FROM CATEGORY ORDER BY Category_ID';
     // 傳回查詢結果
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
@@ -105,6 +105,15 @@ function getCategorys()
         array_push($categorys, $category);
     }
     return $categorys;
+}
+
+
+function deleteCategory($category)
+{
+    $link = db_init();
+    $sql = "DELETE FROM CATEGORY WHERE Category_ID = '$category'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
 }
 
 
@@ -534,7 +543,15 @@ function getNumberOfSolutionInCategory($category)
     return mysqli_fetch_assoc($result);
 }
 
-function UpdateCategory($category,$name)
+function insertCategory($name){
+    $link = db_init();
+    $sql ="INSERT INTO CATEGORY (Category_Name) VALUES ('$name')";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+
+function updateCategory($category, $name)
 {
     $link = db_init();
     $sql = "UPDATE CATEGORY SET Category_Name= '$name' WHERE Category_ID ='$category'";

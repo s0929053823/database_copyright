@@ -3,10 +3,11 @@ $categorys = getCategorys();
 ?>
 <div class="profile-sidebar">
     <div class="table-responsive">
-        <form action="<?= BACKSTAGE_URL ?>insertBook.php">
+        <form action="<?= BACKSTAGE_URL ?>insertCategory.php" method="post">
+            <input type="Text" placeholder="New Category" name="categoryName">
             <button type="submit" class="btn-primary">新增分類</button>
         </form>
-
+        直接在名稱點擊即可修改，修改完後按編輯
         <table class="table table-striped ">
             <thead>
             <tr>
@@ -27,11 +28,13 @@ $categorys = getCategorys();
                     <?php $solutionNumber= getNumberOfSolutionInCategory(($category['Category_ID'])); ?>
                     <td><?= $solutionNumber['SolutionNumber']?></td>
                     <td>
-                        <form method="post" action="<?= BACKSTAGE_URL?>deleteTextbook.php">
+                        <form method="post" action="<?= BACKSTAGE_URL?>deleteCategory.php">
                             <button type="submit" class="btn-primary" name="deleteButton" value=<?=$category['Category_ID'] ?>>刪除</button>
-                            <button type="button" class="btn-warning" name="deleteButton"  onclick="javascript:changeCategoryName(document.getElementById('cid<?= $category['Category_ID'] ?>'))" value="111" >編輯</button>
+                            <button type="button" class="btn-warning" name="ediitButton"  onclick="javascript:changeCategoryName(document.getElementById('cid<?= $category['Category_ID'] ?>'))" value="111" >編輯</button>
                         </form>
+
                     </td>
+
                 </tr>
                 <?php
             }
