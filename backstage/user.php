@@ -19,7 +19,7 @@
         foreach ($users as $user) {
             ?>
             <tr>
-                <td><a href="../profile.php?userid=<?=$user['Member_ID'] ?>"
+                <td><a href="<?=APP_URL?>   profile.php?userid=<?=$user['Member_ID'] ?>"
                        ?><?=$user['Member_ID'] ?></a></td>
                 <td><?=$user['Account'] ?></td>
                 <td><?=$user['Start_Date'] ?></td>

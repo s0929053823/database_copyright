@@ -25,6 +25,7 @@ if($cart_count>0){
                     <tr>
                         <th>Solution</th>
                         <th>Price</th>
+                        <th>Description</th>
                         <th></th>
 
                     </tr>
@@ -32,14 +33,14 @@ if($cart_count>0){
                     <tbody>
                     <?php
                     $total_price=0;
-                    foreach ($_SESSION['cart_items'] as $id=>$price) {
-                        $solution = getSolution($id);
-                        $total_price+=$price;
+                    foreach ($_SESSION['cart_items'] as $item) {
+                        $solution = getSolution($item['id']);
+                        $total_price+=$item['price'];
                         ?>
                         <tr>
                             <td> <a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?= $solution['Title'] ?></a></td>
-                            <td><?=$price ?></td>
-
+                            <td><?=$item['price']?></td>
+                            <td></td>
                             <td>
                                 <a href="removeFromCart.php?id=<?=$id?>"class='btn btn-danger'>
                                     <span class='glyphicon glyphicon-remove'></span> Remove from cart

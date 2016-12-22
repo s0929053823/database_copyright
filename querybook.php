@@ -485,6 +485,7 @@ function insertAndGetReceiptID($member, $total, $amount, $destination)
     }
 }
 
+
 function insertTransaction($solution,$price,$receipt)
 {
     $link = db_init();

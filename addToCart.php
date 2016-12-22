@@ -18,7 +18,9 @@ if(array_key_exists($value, $_SESSION['cart_items'])){
 
 // else, add the item to the array
 else{
-    $_SESSION['cart_items'][$value] = $price;
+    $_SESSION['cart_items'][$value]['id'] = $value;
+    $_SESSION['cart_items'][$value]['price'] = $price;
+    $_SESSION['cart_items'][$value]['description'] = $price;
     // redirect to product list and tell the user it was added to cart
     header("Location: solution.php?action=added&value=".$value);
 }

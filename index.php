@@ -44,11 +44,17 @@ $solutionNumber = 5;
                         $solutionNumber = count($solutions);
                     for ($i = 0; $i < $solutionNumber; $i++) {
                         $solution = $solutions[$i];
+                        $textbook = getTextbook($solution['Textbook_ID']);
                         ?>
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
+                                <?php
+                                $imgSrc = ($textbook['ImgSrc']==null) ? "img/no_image.jpg" :$textbook['ImgSrc'];
+                                ?>
+                                <img src=<?=$imgSrc?> width="100">
 
                                 <div class="caption">
+
                                     <h4 class="pull-right">$<?=$solutions[$i]['Price'] ?></h4>
                                     <h4><a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?=$solutions[$i]['Title'] ?> </a>
                                     </h4>
@@ -59,10 +65,14 @@ $solutionNumber = 5;
                                     <?php $commentNumber = count(getComment($solutions[$i]['Solution_ID'])) ?>
                                     <p class="pull-right"><?=$commentNumber ?> comments</p>
                                     <?php
-                                    $textbook = getTextbook($solutions[$i]['Textbook_ID']);
+
                                     $category = getCategory($textbook['Category_ID']);
                                     ?>
+                                    <?php if($category['Category_Name']) { ?>
                                     <p><?=$category['Category_Name'] ?> </p>
+                                    <?php }  else {?>
+                                        <p>Not Texbook</p>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>

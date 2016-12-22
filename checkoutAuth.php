@@ -38,13 +38,13 @@ if (isset($_POST['check-button'])) {
             <tbody>
             <?php
             $total_price=0;
-            foreach ($_SESSION['cart_items'] as $id=>$price) {
-                $solution = getSolution($id);
-                $total_price+=$price;
+            foreach ($_SESSION['cart_items'] as $item) {
+                $solution = getSolution($item['id']);
+                $total_price+=$item['price'];
                 ?>
                 <tr>
                     <td> <a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?= $solution['Title'] ?></a></td>
-                    <td><?=$price ?></td>
+                    <td><?=$item['price'] ?></td>
                 </tr>
                 <?php
             }

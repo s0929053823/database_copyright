@@ -8,18 +8,19 @@ if(isset($_SESSION['user_id'])&&isset($_SESSION['cart_items'])&&isset($_SESSION[
     $destination = $user['Email'];
 
     $total_price=0;
-    foreach ($_SESSION['cart_items'] as $id=>$price) {
-        $total_price+=$price;
+    foreach ($_SESSION['cart_items'] as $item) {
+
+        $total_price+=$item['price'];
     }
     $remainPoint =  $user['Point'] - $total_price;
     if($remainPoint<0){
         header('location: transactionError.php');
     }
     $receiptID = insertAndGetReceiptID($_SESSION['user_id'],$total_price,$remainPoint,$destination);
-    foreach ($_SESSION['cart_items'] as $id=>$price) {
-        insertTransaction($id,$price,$receiptID);
+    foreach ($_SESSION['cart_items'] as $item) {
+        insertTransaction($item['id'],$item['price'],$receiptID);
     }
-    updateMemberPoint($_SESSION['user_id'],$remainPoint);
+
     header('location: transactionSuccess.php?receipt='.$receiptID);
     unset($_SESSION['cart_items']);
     unset($_SESSION['AuthToken']);
