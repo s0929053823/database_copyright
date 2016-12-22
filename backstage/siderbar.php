@@ -1,14 +1,14 @@
 <?php
-include("backstage_model.php");
-include_once("check.php");
 
 $member = getMember($_SESSION['user_id']);
 if (!isAdmin($member['Member_ID'])) {
     header('location: adminwarning.php');
 }
 
+$sidebarValue = isset($_GET['value'])?$_GET['value']:0;
+
 ?>
-<div class="col-md-3">
+
     <div class="profile-sidebar">
         <!-- SIDEBAR USERPIC -->
         <div class="profile-userpic">
@@ -34,7 +34,7 @@ if (!isAdmin($member['Member_ID'])) {
                         <li class="active">
                         <?php
                     }
-                    $site = "backstage_" . $sites[$i] . ".php";
+                    $site = "backstage.php?value=$i";
                     echo "<a href=$site>";
                     ?>
                     <i class="glyphicon glyphicon-user"></i> <?=$sidebars[$i] ?> </a>
@@ -46,4 +46,4 @@ if (!isAdmin($member['Member_ID'])) {
         </div>
 
     </div>
-</div>
+

@@ -1,5 +1,7 @@
 <?php
-include_once('navigation.php');
+include_once("../config.php");
+include_once('../navigation.php');
+include_once ('../querybook.php');
 $categorys = getCategorys();
 ?>
 
@@ -15,13 +17,11 @@ if (isset($_POST['insert_button'])) {
     $description = $_POST['description'];
     $imgSrc = $_POST['image'];
     insertTextbook($categoryID,$isbn10,$isbn13,$title,$edition,null,$publishYear,$description,$imgSrc);
-    header('location: backstage_textbooks.php');
+    header('location:'.APP_URL.'backstage.php?value=3');
 }
 
-
-
 ?>
-    <body>
+
 <div class="container">
     <div class="row main">
         <div class="panel-heading">
@@ -38,7 +38,7 @@ if (isset($_POST['insert_button'])) {
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Title"/>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="Title" required/>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,6 @@ if (isset($_POST['insert_button'])) {
                                             selected><?= $categorys[$i]['Category_Name'] ?></option>
 
                                 <?php } ?>
-
                             </select>
                         </div>
                     </div>
@@ -70,7 +69,7 @@ if (isset($_POST['insert_button'])) {
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="isbn10" id="isbn10"
-                                   placeholder="ISBN-10"/>
+                                   placeholder="ISBN-10" required/>
                         </div>
                     </div>
                 </div>
@@ -82,7 +81,7 @@ if (isset($_POST['insert_button'])) {
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                                    aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="isbn13" id="isbn13"
-                                   placeholder="ISBN-13"/>
+                                   placeholder="ISBN-13" required>
                         </div>
                     </div>
                 </div>
@@ -94,7 +93,7 @@ if (isset($_POST['insert_button'])) {
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                                    aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="edition" id="edition"
-                                   placeholder="Enter Edition"/>
+                                   placeholder="Enter Edition" required/>
                         </div>
                     </div>
                 </div>
@@ -106,7 +105,7 @@ if (isset($_POST['insert_button'])) {
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                                    aria-hidden="true"></i></span>
                             <input type="text" class="form-control" name="pyear" id="pyear"
-                                   placeholder="Enter Year"/>
+                                   placeholder="Enter Year" required/>
                         </div>
                     </div>
                 </div>
@@ -117,8 +116,7 @@ if (isset($_POST['insert_button'])) {
                         <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                                    aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="description" id="description"
-                            />
+                            <input type="text" class="form-control" name="description" id="description" required/>
                         </div>
                     </div>
                 </div>
@@ -145,5 +143,5 @@ if (isset($_POST['insert_button'])) {
 </div>
 
 <?php
-include_once("footer.php");
+include_once('..\footer.php');
 ?>

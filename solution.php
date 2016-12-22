@@ -11,6 +11,7 @@ $comments = getComment($solution['Solution_ID']);
 $textbook = getTextbook($solution['Textbook_ID']);
 $avgRate = getAverageRate($_GET['value']);
 $comments = getComment($_GET['value']);
+$isActive = $solution['isActive'];
 $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],2),2) :'N/A';
 $price = $solution['Price'];
 ?>
@@ -34,25 +35,63 @@ $price = $solution['Price'];
                 </font>
             </div>
             <h1>
-                <?php if(isLogin()) { ?>
+
+                <?php
+                $isCartEnable ="disabled";
+                $isRateEnable = false;
+                $inCommentEnable = false;
+                $cartText;
+                $rateText;
+                $commentText = "You are already comment";
+                if(isLogin())
+                {
+                    if($solution['Creater_ID']==$_SESSION['user_id'])
+                    {
+                        $commentText = $rateText = $cartText = "You are creator";
+                    }
+                    else if(!$isActive)
+                    {
+                        $commentText = $rateText = $cartText =  "This solution in unavailable";
+                    }
+                    else{
+                        if(isAddedToCart($solution['Solution_ID']))
+                        {
+                            $cartText =  "Already Added";
+                        }
+                        else if(isAlreadyBought($_SESSION['user_id'],$solution['Solution_ID'])) {
+                            $cartText =  "Already Bought";
+                        }
+                        else{
+                            $isCartEnable = "enabled";
+                            $cartText =  "Add to Cart";
+                        }
+
+                        if(isAlreadyBought($_SESSION['user_id'],$solution['Solution_ID']))
+                        {
+                            $isRateEnable = true;
+                            if(!isAlreadyComment($_SESSION['user_id'],$solution['Solution_ID']))
+                            {
+                                $inCommentEnable = true;
+                            }
 
 
-                <?php if(isAddedToCart($solution['Solution_ID'])) { ?>
-                    <a href="#" class='btn btn-primary disabled'>
-                        <span class='glyphicon glyphicon-shopping-cart'></span> Aleardy Added
-                    </a>
-                <?php } else { ?>
-                    <a href="addToCart.php?value=<?= $_GET['value'] ?>&price=<?= $price ?>" class='btn btn-primary'>
-                        <span class='glyphicon glyphicon-shopping-cart'></span> Add to cart
-                    </a>
+                        }
+                        else{
+                            $rateText =  $commentText = "You haven't bought";
 
-                <?php } ?>
-            </h1>
-            <?php } else { ?>
-                <a href="#" class='btn btn-primary disabled'>
-                    <span class='glyphicon glyphicon-shopping-cart'></span> You're not Login
+                        }
+                    }
+                }
+                else
+                {
+                    $commentText = $rateText = $cartText = "You aren't login";
+                }
+
+                ?>
+
+                <a href="addToCart.php?value=<?= $_GET['value'] ?>&price=<?= $price ?>" class='btn btn-primary <?=$isCartEnable?>'>
+                    <span class='glyphicon glyphicon-shopping-cart'></span> <?=$cartText?>
                 </a>
-            <?php } ?>
         </div>
     </div>
     <!-- /.row -->
@@ -67,7 +106,11 @@ $price = $solution['Price'];
 
             <h3>Reference</h3>
             <ul>
+                <?php if($textbook) {?>
                 <a href = "textbook.php?value=<?= $solution['Textbook_ID'] ?>"><h5><?= $textbook ['Title'] ?>(<?= $textbook['Publish_Year'] ?>)</h5></a>
+                <?php } else { ?>
+                    Textbook is deleted
+                <?php } ?>
                 <h5>Chapter <?= $solution['Chapter_Number'] ?></h5>
             </ul>
 
@@ -97,7 +140,7 @@ $price = $solution['Price'];
 
             </div>
             <div class="col-md-6">
-                <?php if ($user != null) {
+                <?php if ($isRateEnable) {
                     $rate = getRateInfo($user['Member_ID'],$solution['Solution_ID']);
                     ?>
 
@@ -127,7 +170,7 @@ $price = $solution['Price'];
                     </div>
                 <?php } else {
                     ?>
-                    <button type="submit" class="btn btn-primary disabled">還沒登入，不能評分</button>
+                    <button type="submit" class="btn btn-primary disabled"><?= $rateText ?></button>
                 <?php } ?>
             </div>
         </div>
@@ -159,7 +202,7 @@ $price = $solution['Price'];
                     </div><!-- /thumbnail -->
                 </div><!-- /col-sm-1 -->
 
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
 
@@ -186,36 +229,28 @@ $price = $solution['Price'];
 <div class="row">
     <div class="col-md-12">
         <h3>I Want to Comment </h3>
-        <?php if ($user!=null) {
-            if(!isAlreadyComment($user['Member_ID'],$solution['Solution_ID'])) {
-                ?>
-                <form action='comment.php' method="post">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <input type='hidden' name='solution' value='<?= $solution['Solution_ID'] ?>'/>
-                            <input type='hidden' name='user' value='<?= $user['Member_ID'] ?>'/>
-                            <textarea class="form-control" name="comment" id="comment" rows="3"
-                                      name="comment"></textarea>
-                        </div>
+        <?php if ($inCommentEnable) { ?>
+            <form action='comment.php' method="post">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <input type='hidden' name='solution' value='<?= $solution['Solution_ID'] ?>'/>
+                        <input type='hidden' name='user' value='<?= $user['Member_ID'] ?>'/>
+                        <textarea class="form-control" name="comment" id="comment" rows="3"
+                                  name="comment"></textarea>
                     </div>
-                    <div class="col-md-4" align="justify">
-                        <button type="submit" class="btn btn-primary active" name="comment_submit">確定
-                        </button>
-                    </div>
-                </form>
-                <?php
-            }
-            else
-            { ?>
-                <h4>You aren already Comment !</h4>
-                <?php
-            }
+                </div>
+                <div class="col-md-4" align="justify">
+                    <button type="submit" class="btn btn-primary active" name="comment_submit">確定
+                    </button>
+                </div>
+            </form>
+            <?php
         }
-
-        else {
-            ?>
-            <h4>You aren't Login!</h4>
-        <?php } ?>
+        else
+        {
+            echo"<h4 style=color:red>$commentText</h4>";
+         }
+        ?>
     </div>
 </div>
 
@@ -265,4 +300,3 @@ include('footer.php');
 ?>
 </div>
 
-<!-- /.container -->

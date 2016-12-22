@@ -108,6 +108,15 @@ function getCategorys()
 }
 
 
+function deleteTextbook($textbook)
+{
+    $link = db_init();
+    $sql = "DELETE FROM TEXTBOOK WHERE TEXTBOOK_ID = '$textbook'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+
 function getTextbooks()
 {
     $link = db_init();
@@ -332,6 +341,20 @@ function unblockSolution($solution_id)
     $result = mysqli_query($link,$sql);
 }
 
+function activeSolution($solution_id)
+{
+    $link = db_init();
+    $sql = "UPDATE SOLUTION SET isActive = true WHERE Solution_ID = '$solution_id'";
+    $result = mysqli_query($link,$sql);
+}
+
+function deactiveSolution($solution_id)
+{
+    $link = db_init();
+    $sql = "UPDATE SOLUTION SET isActive = false WHERE Solution_ID = '$solution_id'";
+    $result = mysqli_query($link,$sql);
+}
+
 function getSchoolDepartmentByID($sd_id)
 {
     $link = db_init();
@@ -362,7 +385,7 @@ function getSearchResult($value)
 {
     $link = db_init();
     $solutions = array();
-    $sql = "SELECT * FROM solution WHERE solution.Title LIKE '%$value%' OR solution.Description LIKE '%$value%'";
+    $sql = "SELECT * FROM solution WHERE solution.isActive = true and (solution.Title LIKE '%$value%' OR solution.Description LIKE '%$value%')";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
     while ($solution = mysqli_fetch_assoc($result)) {
@@ -379,6 +402,15 @@ function getAverageRate($solution)
     if (!$result) die ('無法執行查詢: ' . $sql);
     $avgRate = mysqli_fetch_assoc($result);
     return $avgRate;
+}
+
+function isAlreadyBought($memebr,$solution)
+{
+    $link = db_init();
+    $sql = "SELECT * FROM V_RECEIPT WHERE MEMBER_ID ='$memebr' AND SOLUTION_ID ='$solution'";
+    $result = mysqli_query($link,$sql);
+    $isBought= mysqli_fetch_assoc($result);
+    return ($isBought!=null)? true:false;
 }
 
 function isAlreadyComment($memebr,$solution){
@@ -452,6 +484,18 @@ function insertTransaction($solution,$price,$receipt)
     if (!$result) die ('無法執行查詢: ' . $sql);
 }
 
+function GetReceiptByMemberID($member)
+{
+    $link = db_init();
+    $details = array();
+    $sql = "SELECT * FROM RECEIPT WHERE BUYER_ID = '$member'";
+    $result = mysqli_query($link,$sql);
+    while ($item = mysqli_fetch_assoc($result)) {
+        array_push($details, $item);
+    }
+    return $details;
+}
+
 function getReceiptInfo($receipt)
 {
     $link = db_init();
@@ -465,10 +509,35 @@ function getReceiptDetail($receipt){
     $details = array();
     $sql = "SELECT * FROM V_RECEIPT WHERE RECEIPT_ID = '$receipt'";
     $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
     while ($item = mysqli_fetch_assoc($result)) {
         array_push($details, $item);
     }
     return $details;
 }
 
-?>
+function getNumberOfTextbookInCategory($category)
+{
+    $link = db_init();
+    $sql = "SELECT * FROM v_categorybooknumber WHERE Category_ID = '$category'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return mysqli_fetch_assoc($result);
+}
+
+function getNumberOfSolutionInCategory($category)
+{
+    $link = db_init();
+    $sql = "SELECT * FROM v_categorysolutionnumber WHERE Category_ID = '$category'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return mysqli_fetch_assoc($result);
+}
+
+function UpdateCategory($category,$name)
+{
+    $link = db_init();
+    $sql = "UPDATE CATEGORY SET Category_Name= '$name' WHERE Category_ID ='$category'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}

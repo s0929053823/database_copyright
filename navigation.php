@@ -62,17 +62,18 @@ $user = null;
                     $userType = $user['Type'];
                     $userPoint = $user['Point'];
                     ?>
+
                     <li class="dropdown"><a href="#" class="dropdown-toggle"
                                             data-toggle="dropdown">Welcome, <?=$username ?> <b
                                     class="caret"></b> <font color="red">Point: <?= $userPoint ?></font></a>
                         <ul class="dropdown-menu">
                             <li><a href="myprofile.php"><i class="icon-cog"></i>Profiles</a></li>
                             <li><a href="upsolution.php"><i class="icon-off"></i> Upload Solutions</a></li>
-                            <li><a href="cartview.php"><i class="icon-off"></i> Cart</a></li>
+                            <l ><a class='glyphicon glyphicon-shopping-cart' href="cartview.php"><i class="icon-off"></i> Cart</a></l>
                             <li class="divider"></li>
                             <li><a href="logout.php"><i class="icon-off"></i> Logout</a></li>
                             <?php if ($userType == '0') { ?>
-                                <li><a href="backstage_index.php"><i class="icon-off"></i> Backstage</a></li>
+                                <li><a href="backstage.php"><i class="icon-off"></i> Backstage</a></li>
                             <?php } ?>
                         </ul>
                     </li>

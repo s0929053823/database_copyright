@@ -17,15 +17,13 @@ if (isLogin()) {
                     $username = $_POST['lg_username'];
                     $password = $_POST['lg_password'];
                     if (empty($username) or empty($password)) {
-                        ?>
-                        <label>Field Empty</label>
-                        <?php
+                        echo "<label>Field Empty</label>";
                     } else {
                         $id = getMemberByAccountPassword($username, $password);
                         if ($id == null) {
-                            ?><label>Login Error</label>
-                            <?php
-                        } else {
+                            echo "<label>Login Error</label>";
+                        }
+                        else {
                             $_SESSION['user_id'] = $id;
                             header('location: index.php');
                         }
@@ -45,10 +43,6 @@ if (isLogin()) {
                             <label for="lg_password" class="sr-only">Password</label>
                             <input type="password" class="form-control" id="lg_password" name="lg_password"
                                    placeholder="password">
-                        </div>
-                        <div class="form-group login-group-checkbox">
-                            <input type="checkbox" id="lg_remember" name="lg_remember">
-                            <label for="lg_remember">remember</label>
                         </div>
                     </div>
                     <button type="submit" class="login-button" name="login-button" value="login"><i
