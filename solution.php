@@ -38,22 +38,31 @@ $price = $solution['Price'];
 
                 <?php
                 $isCartEnable ="disabled";
+                $isTraceEnable = "enabled";
                 $isRateEnable = false;
                 $inCommentEnable = false;
                 $cartText;
                 $rateText;
+                $traceText = "trace it";
                 $commentText = "You are already comment";
                 if(isLogin())
                 {
+
+                    if(isTrace($_SESSION['user_id'],$solution['Solution_ID'])){
+                        $traceText =  "Cancel Trace";
+                    }
+
                     if($solution['Creater_ID']==$_SESSION['user_id'])
                     {
-                        $commentText = $rateText = $cartText = "You are creator";
+                        $traceText = $commentText = $rateText = $cartText = "You are creator";
+                        $isTraceEnable = "disabled";
                     }
                     else if(!$isActive)
                     {
                         $commentText = $rateText = $cartText =  "This solution in unavailable";
                     }
                     else{
+
                         if(isAddedToCart($solution['Solution_ID']))
                         {
                             $cartText =  "Already Added";
@@ -84,13 +93,26 @@ $price = $solution['Price'];
                 }
                 else
                 {
-                    $commentText = $rateText = $cartText = "You aren't login";
+                    $isTraceEnable = "disabled";
+                    $traceText = $commentText = $rateText = $cartText = "You aren't login";
                 }
 
                 ?>
 
                 <a href="addToCart.php?value=<?= $_GET['value'] ?>&price=<?= $price ?>" class='btn btn-primary <?=$isCartEnable?>'>
                     <span class='glyphicon glyphicon-shopping-cart'></span> <?=$cartText?>
+                </a>
+                <?php
+                $traceAction= "#";
+                if ($traceText=="trace it"){
+                    $traceAction = "add";
+                }
+                else{
+                    $traceAction = "delete";
+                }
+                ?>
+                <a href="tracecontroller.php?action=<?=$traceAction?>&value=<?= $_GET['value'] ?>" class='btn btn-success <?=$isTraceEnable?>'>
+                        <span class='glyphicon glyphicon-plus'></span> <?=$traceText?>
                 </a>
         </div>
     </div>

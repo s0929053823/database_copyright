@@ -21,14 +21,16 @@ $textbooks = getTextbookCategory();
                 foreach ($textbooks as $textbook) {
                     ?>
                     <tr>
-                        <td><a href="../textbook.php?value=<?=$textbook['Textbook_ID'] ?>"> <?=$textbook['Textbook_ID'] ?></a></td>
+                        <td><a href="<?=APP_URL?>textbook.php?value=<?=$textbook['Textbook_ID']?>"><?=$textbook['Textbook_ID'] ?> </a></td>
                         <td><?=$textbook['Category_Name'] ?></td>
                         <td><?=$textbook['Title'] ?></a></td>
 
                         <td>
-                            <form method="post" action="<?= BACKSTAGE_URL?>deleteTextbook.php">
-                                <button type="submit" class="btn-primary" name="deleteButton" value=<?=$textbook['Textbook_ID'] ?>>刪除
+                            <form method="post" action="<?= BACKSTAGE_URL?>ctrlTextbook.php">
+                                <button type="submit" class="btn-primary" name="editButton" value=<?=$textbook['Textbook_ID'] ?>>修改
                             </button>
+
+                                <button type="submit" class="btn-primary" name="deleteButton" value=<?=$textbook['Textbook_ID'] ?>>刪除</button>
                             </form>
                         </td>
                     </tr>

@@ -2,6 +2,12 @@
 <?php include_once("querybook.php");
 include_once("function.php");
 $user = null;
+if(!isset($_SESSION['cart_items'])){
+    $cart_count = 0;
+}else {
+    $cart_count = count($_SESSION['cart_items']);
+}
+
 ?>
 <head>
     <meta http-equiv="Content-Type" content="text/html>
@@ -31,7 +37,7 @@ $user = null;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">CopyRight</a>
+            <a class="navbar-brand" href="<?= APP_URL ?>index.php">CopyRight</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -69,7 +75,7 @@ $user = null;
                         <ul class="dropdown-menu">
                             <li><a href="myprofile.php"><i class="icon-cog"></i>Profiles</a></li>
                             <li><a href="upsolution.php"><i class="icon-off"></i> Upload Solutions</a></li>
-                            <l ><a class='glyphicon glyphicon-shopping-cart' href="cartview.php"><i class="icon-off"></i> Cart</a></l>
+                            <li><a class='glyphicon glyphicon-shopping-cart' href="cartview.php"><i class="icon-off"></i>Cart(<?= $cart_count ?>)</a></li>
                             <li class="divider"></li>
                             <li><a href="logout.php"><i class="icon-off"></i> Logout</a></li>
                             <?php if ($userType == '0') { ?>
@@ -93,7 +99,7 @@ $user = null;
                     <input type="text" class="form-control" name="value" placeholder="Search.." id="search_key" value="">
                 </div>
                 <span class="input-group-btn">
-                    <button class="btn btn-info" type="submit">Search </button>
+                    <button class ="btn btn-info" type="submit">Search </button>
                 </span>
             </div>
             </form>

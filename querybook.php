@@ -171,6 +171,20 @@ function insertTextbook($category,$isbn10,$isbn13,$title,$edition,$publisher,$py
     if (!$result) die ('無法執行查詢: ' . $sql);
 }
 
+function updateTextbook($textbook,$category,$isbn10,$isbn13,$title,$edition,$publisher,$pyear,$description,$imgsrc)
+{
+
+    $link = db_init();
+    if (empty($publisher)) {
+        $sql = "UPDATE TEXTBOOK SET Category_ID = '$category', ISBN_10 = '$isbn10', ISBN_13 = '$isbn13', Title = '$title', Edition = '$edition', Publish_Year = '$pyear', Description = '$description', ImgSrc = '$imgsrc' WHERE Textbook_ID = '$textbook'";
+    }
+    else {
+        $sql = "UPDATE TEXTBOOK SET Category_ID = '$category', ISBN_10 = '$isbn10', ISBN_13 = '$isbn13', Title = '$title', Edition = '$edition',Pulisher='$publisher', Publish_Year = '$pyear', Description = '$description', ImgSrc = '$imgsrc' WHERE Textbook_ID = '$textbook'";
+    }
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
 function getSolutionsAndCreators()
 {
     $link = db_init();
@@ -558,4 +572,53 @@ function updateCategory($category, $name)
     $sql = "UPDATE CATEGORY SET Category_Name= '$name' WHERE Category_ID ='$category'";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function isTrace($member,$solution)
+{
+    $link = db_init();
+    $sql = "SELECT * FROM TRACE_LIST WHERE Member_ID='$member' AND Solution_ID = '$solution'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return mysqli_fetch_assoc($result);
+}
+
+function insertTrace($member,$solution){
+    $link = db_init();
+    $sql = "INSERT INTO TRACE_LIST (Member_ID, Solution_ID) VALUES ($member, $solution)";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function deleteTrace($member,$solution){
+    $link = db_init();
+    $sql = "DELETE FROM TRACE_LIST  WHERE Member_ID='$member' AND Solution_ID = '$solution'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function getTraceByMemberID($member)
+{
+    $traces = array();
+    $link = db_init();
+    $sql = "SELECT * FROM TRACE_LIST WHERE MEMBER_ID = '$member'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($trace = mysqli_fetch_assoc($result)) {
+        array_push($traces, $trace);
+    }
+    return $traces;
+}
+
+function getAuthorsByTextbookID($textbook)
+{
+    $authors = array();
+    $link = db_init();
+    $sql = "SELECT * FROM v_textbook_author WHERE TEXTBOOK_ID = '$textbook'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($author = mysqli_fetch_assoc($result)) {
+        array_push($authors, $author);
+    }
+    return $authors;
 }

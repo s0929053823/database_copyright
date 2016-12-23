@@ -1,9 +1,9 @@
 
 <?php include_once ('config.php'); ?>
-<?php include("querybook.php"); ?>
-<?php include("navigation.php"); ?>
+<?php include_once("querybook.php"); ?>
+<?php include_once("navigation.php"); ?>
 <?php include_once ('check.php') ;?>
-<?php include(BACKSTAGE_URL."model.php");?>
+<?php include_once(BACKSTAGE_URL."model.php");?>
 <!-- Page Content -->
 <body>
 <div class="container">
@@ -17,4 +17,4 @@
     </div>
 </div>
 </body>
-<?php include("footer.php"); ?>
+<?php include_once("footer.php"); ?>

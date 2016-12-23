@@ -7,6 +7,7 @@ $textbook = getTextbook($_GET['value']);
 if(!$textbook) return;
 $category = getCategory($textbook['Category_ID']);
 $imgSrc = ($textbook['ImgSrc']==null) ? "img/no_image.jpg" :$textbook['ImgSrc'];
+$authors = getAuthorsByTextbookID($textbook['Textbook_ID']);
 ?>
 <!-- Portfolio Item Row -->
 <div class="row">
@@ -22,6 +23,22 @@ $imgSrc = ($textbook['ImgSrc']==null) ? "img/no_image.jpg" :$textbook['ImgSrc'];
         <h3>Publish Year</h3>
         <ul>
             <h5><?= $textbook['Publish_Year'] ?></h5>
+        </ul>
+        <h3>Author</h3>
+        <ul>
+            <h5>
+                <?php
+                    foreach ($authors as $author){
+                        echo"<a href=\"#\">".$author['Name']."</a>";
+                        echo "<br>";
+                    }
+
+                ?>
+            </h5>
+        </ul>
+        <h3>Publisher</h3>
+        <ul>
+
         </ul>
         <h3>ISBN</h3>
         <ul>
@@ -47,7 +64,7 @@ $imgSrc = ($textbook['ImgSrc']==null) ? "img/no_image.jpg" :$textbook['ImgSrc'];
 
         <h3>Description</h3>
         <ul>
-            <p><?= $solution['Description'] ?></p>
+            <p><?= $textbook['Description'] ?></p>
         </ul>
 
     </div>

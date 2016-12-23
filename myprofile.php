@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php include("navigation.php"); ?>
-<?php include("check.php"); ?>
+<?php include_once("navigation.php"); ?>
+<?php include_once("check.php"); ?>
 <?php
-$sidebars = array("Overview", "AccountSetting", "Solutions", "Transaction");
-$sites = array("index", "account", "solutions", "transaction");
+$sidebars = array("Overview", "AccountSetting", "Solutions", "Transaction","TraceList");
+$sites = array("index", "account", "solutions", "transaction","trace");
 $userType = array("管理員", "一般用戶", "高級用戶");
 $sideValue = isset($_GET['sidevalue'])?  $_GET['sidevalue'] : 0;
 $member = getMember($_SESSION['user_id']);
