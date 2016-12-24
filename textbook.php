@@ -29,7 +29,7 @@ $authors = WritingRelation::GetAuthorByTextbookID($textbook->id);
             <h5>
                 <?php
                 foreach ($authors as $author){
-                    echo"<a href=\"#\">".$author->name."</a>";
+                    echo"<a href=\"$author->url\">".$author->name."</a>";
                     echo "<br>";
                 }
                 ?>

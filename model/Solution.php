@@ -19,6 +19,14 @@ class Solution
         return new Solution(getSolutionByID($id));
     }
 
+    static function BlockSoltuion($id){
+        blockSolution($id);
+    }
+
+    static function UnblockSolution($id){
+        unblockSolution($id);
+    }
+
     static function GetByMemberID($memberID){
         $result = array();
         $solutions = getSolutionsByCreator($memberID);

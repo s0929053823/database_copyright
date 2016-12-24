@@ -7,6 +7,7 @@
 <!-- Page Content -->
 <body>
 <div class="container">
+
     <div class ="col-md-12">
         <div class="col-md-3">
         <?php include_once(BACKSTAGE_URL . "siderbar.php");?>

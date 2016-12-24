@@ -51,7 +51,7 @@ $solutionNumber = 5;
                         ?>
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
-                                <img src=<?=$textbook->imgSrc?> width="100" height="200">
+                                <img src=<?=$textbook->imgSrc?>  height="100">
                                 <div class="caption">
                                     <h4 class="pull-right">$<?=$solution->price?></h4>
                                     <h4><a href="<?= $solution->url?>"><?=$solution->title?> </a></h4>

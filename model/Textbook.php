@@ -20,7 +20,7 @@ class Textbook
     }
 
     static function Insert($categoryID,$isbn10,$isbn13,$title,$edition,$publisher,$publishYear,$description,$imgSrc){
-        insertTextbook($categoryID,$isbn10,$isbn13,$title,$edition,$publisher,$publishYear,$description,$imgSrc);
+        return insertTextbook($categoryID,$isbn10,$isbn13,$title,$edition,$publisher,$publishYear,$description,$imgSrc);
     }
 
     static function Update($textbookID,$categoryID,$isbn10,$isbn13,$title,$edition,$publisher,$publishYear,$description,$imgSrc){

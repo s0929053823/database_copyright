@@ -13,6 +13,18 @@ class WritingRelation
 
     }
 
+    static function Insert($textbookID,$authorID){
+        insertWritingRelation($textbookID,$authorID);
+    }
+
+    static function Delete(){
+
+    }
+
+    static function DeleteByTextbookID($textbookID){
+        deleteWRbyTextbookID($textbookID);
+    }
+
     static function GetAuthorByTextbookID($textbookID)
     {
         $result = array();
@@ -21,6 +33,16 @@ class WritingRelation
             array_push($result,Author::GetByID($author['Author_ID']));
         }
         return $result;
+    }
+
+    static function GetTextbookByAuthorID($authorID){
+        $result =array();
+        $textbooks = getTextbooksByAuthorID($authorID);
+        foreach ($textbooks as $textbook){
+            array_push($result,Textbook::GetByID($textbook['Textbook_ID']));
+        }
+        return $result;
+
     }
 
     public function __construct($WR)

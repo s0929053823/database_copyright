@@ -18,11 +18,13 @@ if(!isset($_SESSION['cart_items'])){
     <title>CopyRight - Find Solution</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="<?= APP_URL ?>/css/bootstrap.min.css">
-    <link href="<?= APP_URL ?>/css/mystyle.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link href="<?= APP_URL ?>css/mystyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= APP_URL ?>dist/css/bootstrap-select.css">
     <!-- Custom CSS -->
     <link href="<?= APP_URL ?>/css/shop-homepage.css" rel="stylesheet">
+    <script src="<?= APP_URL ?>dist/js/bootstrap-select.js"></script>
 
 </head>
 <body>

@@ -24,19 +24,17 @@ require_once 'model/Solution.php';
                         <td><a href="<?=$creator->url ?>"><?=$creator->account?></a></td>
                         <td><?=$solution->createDate?></td>
                         <td>
-                            <form method="post" action="<?=BACKSTAGE_URL?>setsolution.php">
+                            <form method="post" action="action.php">
                                 <?php if (!$solution->isForbidden) { ?>
-                                    <button type="submit" class="btn-primary" name="Block" value=<?=$solution->id?>>封鎖</button>
+                                    <button type="submit" class="btn-primary" name="block_solution" value=<?=$solution->id?>>封鎖</button>
                                 <?php } else {?>
-                                    <button type="submit" class="btn-warning" name="Unblock" value=<?=$solution->id?>>解鎖</button>
+                                    <button type="submit" class="btn-warning" name="unblock_solution" value=<?=$solution->id?>>解鎖</button>
                                 <?php } ?>
                             </form>
                         </td>
-
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
         </div>
     </div>
-

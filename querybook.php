@@ -169,6 +169,8 @@ function insertTextbook($category,$isbn10,$isbn13,$title,$edition,$publisher,$py
     }
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
+    $lastID =  mysqli_insert_id($link) ;
+    return $lastID;
 }
 
 function updateTextbook($textbook,$category,$isbn10,$isbn13,$title,$edition,$publisher,$pyear,$description,$imgsrc)
@@ -624,6 +626,39 @@ function getTraceByMemberID($member)
     return $traces;
 }
 
+function getAuthors(){
+    $authors = array();
+    $link = db_init();
+    $sql = "SELECT * FROM AUTHOR";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($author = mysqli_fetch_assoc($result)) {
+        array_push($authors, $author);
+    }
+    return $authors;
+}
+
+function updateAuthor($authorID,$name,$description,$imgSrc){
+    $link = db_init();
+    $sql = "UPDATE AUTHOR SET Name = '$name', Description = '$description', ImgSrc = '$imgSrc' WHERE Author_ID = '$authorID'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function deleteAuthor($authorID){
+    $link = db_init();
+    $sql = "DELETE FROM AUTHOR WHERE Author_ID = '$authorID'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function insertAuthor($name,$description,$imgSrc){
+    $link = db_init();
+    $sql =  "INSERT INTO AUTHOR (Name ,Description, ImgSrc) VALUES ('$name', '$description', '$imgSrc')";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
 function getAuthorByID($id){
     $link = db_init();
     $sql = "SELECT * FROM AUTHOR WHERE AUTHOR_ID = '$id'";
@@ -643,4 +678,38 @@ function getAuthorsByTextbookID($textbook)
         array_push($authors, $author);
     }
     return $authors;
+}
+
+function getTextbooksByAuthorID($author)
+{
+    $textbooks = array();
+    $link = db_init();
+    $sql = "SELECT * FROM v_textbook_author WHERE AUTHOR_ID = '$author'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($textbook = mysqli_fetch_assoc($result)) {
+        array_push($textbooks, $textbook);
+    }
+    return $textbooks;
+}
+
+function insertWritingRelation($textbookID,$authorID){
+    $link = db_init();
+    $sql = "INSERT INTO WRITING_RELATION (Textbook_ID, Author_ID) VALUES ('$textbookID', '$authorID')";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function deleteWritingRelation($textbookID,$authorID){
+    $link = db_init();
+    $sql = "DELETE FROM WRITING_RELATION WHERE Textbook_ID = '$textbookID' AND Author_ID '$authorID'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function deleteWRbyTextbookID($textbookID){
+    $link = db_init();
+    $sql = "DELETE FROM WRITING_RELATION WHERE Textbook_ID = '$textbookID'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
 }

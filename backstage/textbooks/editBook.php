@@ -1,6 +1,11 @@
 <?php
+require_once 'model/Author.php';
+require_once  'model/WritingRelation.php';
 $categorys = Category::GetAll();
-$textBook = Textbook::GetByID($_GET['bookid']);
+$textBook = Textbook::GetByID($_GET['bookid']);;
+$authors = Author::GetAll();
+$textBookAuthors = WritingRelation::GetAuthorByTextbookID($textBook->id);
+
 ?>
 
 
@@ -12,13 +17,33 @@ $textBook = Textbook::GetByID($_GET['bookid']);
 </div>
 <div class="main-login main-center">
     <form class="form-horizontal" method="post" action="action.php">
-
+        <input type ="text" name="bookID" value="<?= $textBook->id?>" hidden>
         <div class="form-group">
             <label for="name" class="cols-sm-2 control-label">Title</label>
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                     <input type="text" class="form-control" name="title" id="title" value="<?=$textBook->title ?>" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" >
+            <label for="category" class="cols-sm-2 control-label ">Author</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <select class="selectpicker" id="author" name="author[]" data-live-search="true" multiple>
+                        <?php foreach ($authors as $author) {
+                            foreach ($textBookAuthors as $textbookauthor){
+
+                                if($author->id==$textbookauthor->id){
+                                    echo " <option value= $author->id selected>$author->name</option> ";
+                                    break;
+                                }
+                            }
+                            echo " <option value= $author->id >$author->name</option> ";
+                         } ?>
+                    </select>
                 </div>
             </div>
         </div>
@@ -88,21 +113,9 @@ $textBook = Textbook::GetByID($_GET['bookid']);
             <label for="pyear" class="cols-sm-2 control-label">Publish Year</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
                     <input type="text" class="form-control" name="pyear" id="pyear"
                            value="<?=$textBook->publishYear ?>" required/>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="description" class="cols-sm-2 control-label">Description</label>
-            <div class="cols-sm-10">
-                <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <textarea class="form-control" name="description" id="description" required><?=$textBook->description ?></textarea>
                 </div>
             </div>
         </div>
@@ -111,18 +124,28 @@ $textBook = Textbook::GetByID($_GET['bookid']);
             <label for="image" class="cols-sm-2 control-label">ImageSource</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="image" id="image" value="<?=$textBook->imgSrc?>"/>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="image" id="image" value="<?=$textBook->imgSrc ?>"/>
                 </div>
             </div>
         </div>
 
-        <div class="form-group ">
-            <button type="submit" class="btn btn-primary btn-lg btn-block login-button" name="edit_textbook" value="<?= $textBook->id ?>">Confirm</button>
+        <div class="form-group">
+            <label for="pyear" class="cols-sm-2 control-label">Description</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                <textarea maxlength="255" cols="4" class="form-control" name="description" id="description" required><?=$textBook->description ?></textarea>
+            </div>
         </div>
 
-    </form>
+        <div class="form-group ">
+            <div class="input-group">
+                <button type="submit" class="btn btn-primary btn-lg btn-block login-button" name="edit_textbook" value="<?php $textBook->id?>">Confirm</button>
+            </div>
+        </div>
+</div>
+
+</form>
 </div>
 
 
