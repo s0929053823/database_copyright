@@ -1,7 +1,10 @@
 <?php include("navigation.php"); ?>
 <?php
+require_once 'model/Category.php';
+require_once 'model/Solution.php';
+require_once 'model/Textbook.php';
 $categorys = getCategorys();
-$solutions = getSolutions();
+$solutions = Solution::GetAll();
 $solutionNumber = 5;
 ?>
     <!-- Page Content -->
@@ -44,35 +47,28 @@ $solutionNumber = 5;
                         $solutionNumber = count($solutions);
                     for ($i = 0; $i < $solutionNumber; $i++) {
                         $solution = $solutions[$i];
-                        $textbook = getTextbook($solution['Textbook_ID']);
+                        $textbook = Textbook::GetByID($solution->textbookID);
                         ?>
                         <div class="col-sm-4 col-lg-4 col-md-4">
                             <div class="thumbnail">
-                                <?php
-                                $imgSrc = ($textbook['ImgSrc']==null) ? "img/no_image.jpg" :$textbook['ImgSrc'];
-                                ?>
-                                <img src=<?=$imgSrc?> width="100">
-
+                                <img src=<?=$textbook->imgSrc?> width="100" height="200">
                                 <div class="caption">
-
-                                    <h4 class="pull-right">$<?=$solutions[$i]['Price'] ?></h4>
-                                    <h4><a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?=$solutions[$i]['Title'] ?> </a>
-                                    </h4>
-                                    <p><?=$solutions[$i]['Description'] ?></p>
+                                    <h4 class="pull-right">$<?=$solution->price?></h4>
+                                    <h4><a href="<?= $solution->url?>"><?=$solution->title?> </a></h4>
+                                    <p><?=$solution->description ?></p>
                                 </div>
 
                                 <div class="ratings">
-                                    <?php $commentNumber = count(getComment($solutions[$i]['Solution_ID'])) ?>
+                                    <?php $commentNumber = count(getCommentsBySolutionID($solution->id)) ?>
                                     <p class="pull-right"><?=$commentNumber ?> comments</p>
-                                    <?php
-
-                                    $category = getCategory($textbook['Category_ID']);
-                                    ?>
-                                    <?php if($category['Category_Name']) { ?>
-                                    <p><?=$category['Category_Name'] ?> </p>
-                                    <?php }  else {?>
-                                        <p>Not Texbook</p>
-                                    <?php } ?>
+                                    <?php if($solution->textbookID!=null) {
+                                        $category = Category::GetByID($textbook->categoryID);
+                                        echo $category->name;
+                                    }
+                                    else{
+                                        echo "Textbook Not Found";
+                                    }
+                                   ?>
                                 </div>
                             </div>
                         </div>

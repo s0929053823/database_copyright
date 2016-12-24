@@ -1,14 +1,19 @@
-<?php include ('navigation.php') ?>
+<?php
+include_once ('navigation.php');
+require_once 'model/Receipt.php';
+require_once 'tableView/V_ReceiptDetail.php';
+require_once 'model/Solution.php';
+?>
 
 <?php if(isset($_GET['receipt'])) {
-    $receipt = $_GET['receipt'];
-    $receiptInfo = getReceiptInfo($receipt);
+    $receiptInfo = Receipt::GetByID($_GET['receipt']);
+    $receiptDetails = V_ReceiptDetail::GetByReceiptID($_GET['receipt']);
     ?>
     <div class="alert alert-success fade in">
         <strong>Congratulation!</strong> Transaction Success
     </div>
 
-    <h3>收據編號 <?= $receipt ?> 訂購時間 <?= $receiptInfo['Buying_Date'] ?> </h3>
+    <h3>收據編號 <?= $receiptInfo->id ?> 訂購時間 <?= $receiptInfo->buyingDate ?> </h3>
 
     <div class="col-md-2">
         <div class="table-responsive">
@@ -20,24 +25,24 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <?php
-                $receiptDetail = getReceiptDetail($receipt);
-                foreach ($receiptDetail as $itemDetail) {
+                foreach ($receiptDetails as $detail) {
                     ?>
                     <tr>
-                        <td> <a href="solution.php?value=<?= $itemDetail['Solution_ID'] ?>"><?= $itemDetail['Title'] ?></a></td>
-                        <td><?=$itemDetail['Price'] ?></td>
+                        <td><a href="<?=Solution::getURL($detail->solutionID)?>"><?=$detail->solutionTitle ?></a></td>
+                        <td><?=$detail->transactionPrice ?></td>
                     </tr>
                     <?php
                 }
                 ?>
                 <tr>
                     <td>總計</td>
-                    <td><?=$receiptInfo['Total'] ?></td>
+                    <td><?=$receiptInfo->total ?></td>
                 </tr>
                 <tr>
                     <td>餘額</td>
-                    <td><?=$receiptInfo['Amount'] ?></td>
+                    <td><?=$receiptInfo->amount ?></td>
                 </tr>
                 </tbody>
             </table>

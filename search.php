@@ -19,7 +19,7 @@ $solutions = getSearchResult($_GET['value']);
     <?php
     foreach ($solutions as $solution) {
             $creator = getMember($solution['Creater_ID']);
-            $textbook = getTextbook($solution['Textbook_ID']);
+            $textbook = getTextbookByID($solution['Textbook_ID']);
         ?>
         <div class="row">
             <div class="col-md-7">

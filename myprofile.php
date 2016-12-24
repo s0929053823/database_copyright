@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php include_once("navigation.php"); ?>
-<?php include_once("check.php"); ?>
+
 <?php
+include_once("navigation.php");
+include_once("check.php");
+require_once 'model/Member.php';
+
 $sidebars = array("Overview", "AccountSetting", "Solutions", "Transaction","TraceList");
 $sites = array("index", "account", "solutions", "transaction","trace");
-$userType = array("管理員", "一般用戶", "高級用戶");
 $sideValue = isset($_GET['sidevalue'])?  $_GET['sidevalue'] : 0;
-$member = getMember($_SESSION['user_id']);
+$member = Member::GetByID($_SESSION['user_id']);
 ?>
 <!-- Page Content -->
 <div class="container">
@@ -25,7 +25,7 @@ $member = getMember($_SESSION['user_id']);
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">
-                        <?=$member['Account'] ?>
+                        <?=$member->account?>
                     </div>
                 </div>
                 <!-- END SIDEBAR USER TITLE -->
@@ -35,7 +35,6 @@ $member = getMember($_SESSION['user_id']);
                         <?php for($i=0;$i<count($sidebars);$i++) {
                             if($sideValue == $i) {
                                 echo '<li class="active">';
-
                             }
                             else
                             {
@@ -44,7 +43,6 @@ $member = getMember($_SESSION['user_id']);
                             echo "<a href=\"myprofile.php?sidevalue=$i\"> <i class ='glyphicon glyphicon-user'></i> $sidebars[$i] </a>";
                             echo'</li>';
                         } ?>
-
                     </ul>
                 </div>
                 <!-- END MENU -->
@@ -60,5 +58,4 @@ $member = getMember($_SESSION['user_id']);
         </div>
     </div>
 </div>
-
 <?php include("footer.php"); ?>

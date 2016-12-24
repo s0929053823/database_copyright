@@ -1,7 +1,7 @@
 <?php include('navigation.php'); ?>
 <?php include("check.php"); ?>
 <?php
-
+require_once 'model/Solution.php';
 if(!isset($_SESSION['cart_items'])){
     $cart_count = 0;
 }else{
@@ -34,11 +34,11 @@ if($cart_count>0){
                     <?php
                     $total_price=0;
                     foreach ($_SESSION['cart_items'] as $item) {
-                        $solution = getSolution($item['id']);
+                        $solution = Solution::GetByID($item['id']);
                         $total_price+=$item['price'];
                         ?>
                         <tr>
-                            <td> <a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?= $solution['Title'] ?></a></td>
+                            <td> <a href="<?= $solution->url ?>"><?= $solution->title ?></a></td>
                             <td><?=$item['price']?></td>
                             <td></td>
                             <td>
@@ -52,7 +52,7 @@ if($cart_count>0){
                     }
                     ?>
                     <tr>
-                        <?php $remainPoint =  $user['Point'] - $total_price ?>
+                        <?php $remainPoint =  $user->point - $total_price ?>
                         <td><b>Total: </b></td>
                         <td><b<i><?= $total_price ?></i></b></td>
                         <td> <?php if($remainPoint>0) { ?>

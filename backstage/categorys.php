@@ -1,11 +1,12 @@
 <?php
-$categorys = getCategorys();
+require_once 'config.php';
+require_once 'model/Category.php';
 ?>
 <div class="profile-sidebar">
     <div class="table-responsive">
-        <form action="<?= BACKSTAGE_URL ?>insertCategory.php" method="post">
-            <input type="Text" placeholder="New Category" name="categoryName">
-            <button type="submit" class="btn-primary">新增分類</button>
+        <form action="<?= APP_URL?>action.php" method="post">
+            <input type="Text" placeholder="New Category" name="category_name">
+            <button type="submit" class="btn-primary" name="insert_category">新增分類</button>
         </form>
         直接在名稱點擊即可修改，修改完後按編輯
         <table class="table table-striped ">
@@ -18,39 +19,40 @@ $categorys = getCategorys();
             </tr>
             </thead>
             <tbody>
-            <?php
-            foreach ($categorys as $category) {
-                ?>
+            <?php foreach (Category::GetAll() as $category) { ?>
                 <tr>
-                    <td><div id="cid<?= $category['Category_ID'] ?>" contenteditable><?= $category['Category_Name']?></div></td>
-                    <?php $bookNumber = getNumberOfTextbookInCategory($category['Category_ID']); ?>
-                    <td><?= $bookNumber['Number' ]?></td>
-                    <?php $solutionNumber= getNumberOfSolutionInCategory(($category['Category_ID'])); ?>
-                    <td><?= $solutionNumber['SolutionNumber']?></td>
+                    <td><div id="cid<?= $category->id ?>" contenteditable><?= $category->name?></div></td>
+                    <?php $bookNumber = getNumberOfTextbookInCategory($category->id); ?>
+                    <td><?= $category->GetTextbookNumber()?></td>
+                    <td><?= $category->GetSolutionNumber()?></td>
                     <td>
-                        <form method="post" action="<?= BACKSTAGE_URL?>deleteCategory.php">
-                            <button type="submit" class="btn-primary" name="deleteButton" value=<?=$category['Category_ID'] ?>>刪除</button>
-                            <button type="button" class="btn-warning" name="ediitButton"  onclick="javascript:changeCategoryName(document.getElementById('cid<?= $category['Category_ID'] ?>'))" value="111" >編輯</button>
+                        <form method="post" action="<?= APP_URL?>action.php">
+                            <button type="submit" class="btn-primary" name="delete_category" value=<?=$category->id ?>>刪除</button>
+                            <button type="button" class="btn-warning" name="edit_category"  onclick="javascript:changeCategoryName(document.getElementById('cid<?= $category->id ?>'))" value="111" >編輯</button>
                         </form>
 
                     </td>
 
                 </tr>
-                <?php
-            }
-            ?>
+            <?php } ?>
             </tbody>
         </table>
-        </form>
     </div>
 </div>
 
 <script type="text/javascript">
-  function changeCategoryName (newName) {
+    function changeCategoryName (newName) {
         console.log(newName);
+
         var re = /cid/g;
         var id =  (newName.id).replace(re,"") ;
         var name =newName.innerHTML;
-      window.location.href = "<?= BACKSTAGE_URL ?>editcategory.php?value=4&id="+id +"&name="+name;
-  }
+      //  window.location.href = "<?= BACKSTAGE_URL ?>editcategory.php?value=4&id="+id +"&name="+name;
+        $.ajax({
+            type: "POST",
+            url: "action.php",
+            data: { edit_category : id ,category_name : name},
+        });
+    }
+
 </script>

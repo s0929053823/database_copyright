@@ -22,4 +22,3 @@ if (isset($_POST['delete_rate'])) {
     deleteRate($postUser,$postSolution);
     header("location: solution.php?value=$postSolution");
 }
-?>

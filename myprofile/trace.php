@@ -1,5 +1,6 @@
 <?php
-    $traces = getTraceByMemberID($_SESSION['user_id']);
+    require_once 'model/Trace.php';
+    require_once 'model/Solution.php';
 ?>
 
 <h1> My Solutions</h1>
@@ -16,14 +17,14 @@
             </thead>
             <tbody>
             <?php
-            foreach ($traces as $trace) {
-                $solution = getSolution($trace['Solution_ID']);
+            foreach (Trace::GetByMemberID($member->id) as $trace) {
+                $solution = Solution::GetByID($trace->solutionID)
                 ?>
                 <tr>
-                    <td><a href="solutionco.php?value=<?= $trace['Solution_ID'] ?>"><?=$solution['Title'] ?></a></td>
+                    <td><a href="<?=$solution->url?>"><?=$solution->title ?></a></td>
                     <td>
                         <form method="POST" action="<?= MPROFILE_URL ?>tracecontroller.php"">
-                        <button type="submit" class="btn-primary" name="cancel" value=<?=$solution['Solution_ID'] ?>>取消</button>
+                        <button type="submit" class="btn-primary" name="cancel" value=<?=$solution->id ?>>取消</button>
                         </form>
                     </td>
                 </tr>

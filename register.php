@@ -1,5 +1,8 @@
 <?php include("navigation.php"); ?>
-<?php $schools = getSchools(); ?>
+<?php
+require_once 'model/SchoolDepartment.php';
+$schools = School::GetAll();
+?>
 <!-- REGISTRATION FORM -->
 <div class="text-center" style="padding:50px 0">
     <div class="logo">Register</div>
@@ -62,50 +65,38 @@
                                 onchange="javascript:changeSchool(document.getElementById('reg_school').value)"
                                 id="reg_school" name="reg_school">
                             <option value="0">None</option>
+                            <?php foreach ($schools as $school) {
 
-                            <?php for ($i = 0; $i < count($schools); $i++) {
-                                if (isset($_GET['schoolValue']) && $_GET['schoolValue'] == $schools[$i]['school_id']) {
+                                if (isset($_GET['schoolValue']) && $_GET['schoolValue'] == $school->id) {
                                     ?>
-                                    <option value="<?= $schools[$i]['school_id'] ?>"
-                                            selected><?= $schools[$i]['name_cht'] ?></option>
-
+                                    <option value="<?= $school->id?>"selected><?= $school->nameCHT ?></option>
                                     <?php
                                 } else {
                                     ?>
-                                    <option value="<?= $schools[$i]['school_id'] ?>"><?= $schools[$i]['name_cht'] ?></option>
+                                    <option value="<?= $school->id ?>"><?= $school->nameCHT ?></option>
                                 <?php }
                             }
                             ?>
-
                         </select>
                     </div>
 
-                    <?php
-                    if (isset($_GET['schoolValue']) && $_GET['schoolValue'] != '0') {
-                        ?>
+                    <?php if (isset($_GET['schoolValue']) && $_GET['schoolValue'] != '0') { ?>
                         <div class="form-group">
                             <label for="reg_deparmtent">Department</label>
                             <select class="form-control" id="reg_department" name="reg_department">
                                 <?php
-                                $departments = getSchoolDepartments($_GET['schoolValue']);
-                                for ($i = 0; $i < count($departments); $i++) {
-                                    $department = getDepartment($departments[$i]['department_id']);
-                                    ?>
-                                    <option value="<?= $department['department_id'] ?>"><?= $department['name_cht'] ?></option>
-                                    <?php
-                                }
-                                ?>
+                                $departments =SchoolDepartment::GetDepartmentsBySchoolID($_GET['schoolValue']);
+                                foreach ($departments as $department) { ?>
+                                    <option value="<?= $department->id?>"><?= $department->nameCHT ?></option>
+                                <?php } ?>
                             </select>
                         </div>
-                        <?php
-                    }
-                    ?>
+                    <?php } ?>
 
                     <div class="form-group">
                         <label for="reg_birthday" class="sr-only">Birthday</label>
                         <input type="date" class="form-control" id="reg_birthday" name="reg_birthday"">
                     </div>
-
 
                 </div>
                 <button type="submit" name="register-button" class="login-button"><i class="fa fa-chevron-right"></i>

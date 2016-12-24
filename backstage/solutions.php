@@ -1,7 +1,6 @@
 <?php
-$solutions = getSolutionsAndCreators();
+require_once 'model/Solution.php';
 ?>
-<!-- Page Content -->
     <div class="profile-sidebar">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -16,32 +15,26 @@ $solutions = getSolutionsAndCreators();
                 </thead>
                 <tbody>
                 <?php
-                foreach ($solutions as $solution) {
+                foreach (Solution::GetAll() as $solution) {
+                    $creator = Member::GetByID($solution->creatorID);
                     ?>
                     <tr>
-                        <td><a href="<?=APP_URL?>/solution.php?value=<?= $solution['Solution_ID'] ?>"><?=$solution['Solution_ID'] ?></a></td>
-                        <td><?=$solution['Title'] ?></td>
-                        <td>
-                            <a href="<?=APP_URL?>/profile.php?userid=<?=$solution['Creater_ID'] ?>"><?=$solution['Account'] ?></a>
-                        </td>
-                        <td><?=$solution['Create_Date'] ?></td>
+                        <td><a href="<?=$solution->url?>"><?=$solution->id?></a></td>
+                        <td><?=$solution->title?></td>
+                        <td><a href="<?=$creator->url ?>"><?=$creator->account?></a></td>
+                        <td><?=$solution->createDate?></td>
                         <td>
                             <form method="post" action="<?=BACKSTAGE_URL?>setsolution.php">
-                                <?php if (!$solution['isForbidden']) { ?>
-                                    <button type="submit" class="btn-primary" name="Block" value=<?=$solution['Solution_ID'] ?>>封鎖
-                                    </button>
-                                <?php } else {
-                                    ?>
-                                    <button type="submit" class="btn-warning" name="Unblock" value=<?=$solution['Solution_ID'] ?>>解鎖
-                                    </button>
+                                <?php if (!$solution->isForbidden) { ?>
+                                    <button type="submit" class="btn-primary" name="Block" value=<?=$solution->id?>>封鎖</button>
+                                <?php } else {?>
+                                    <button type="submit" class="btn-warning" name="Unblock" value=<?=$solution->id?>>解鎖</button>
                                 <?php } ?>
                             </form>
                         </td>
 
                     </tr>
-                    <?php
-                }
-                ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

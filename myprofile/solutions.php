@@ -1,9 +1,5 @@
-<?php
-$solutions =  getSolutionsByCreator($member['Member_ID']);
-?>
-
+<?php require_once 'model/Solution.php'?>
 <h1> My Solutions</h1>
-
 <div class="profile-sidebar">
     <div class="table-responsive">
         <table class="table table-striped">
@@ -15,34 +11,28 @@ $solutions =  getSolutionsByCreator($member['Member_ID']);
             </tr>
             </thead>
             <tbody>
-            <?php
-            foreach ($solutions as $solution) {
-                ?>
+            <?php foreach (Solution::GetByMemberID($member->id) as $solution) { ?>
                 <tr>
-                    <td><a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?=$solution['Title'] ?></a></td>
-                    <td><?=$solution['Create_Date'] ?></td>
+                    <td><a href="<?= $solution->url ?>"><?=$solution->title ?></a></td>
+                    <td><?=$solution->createDate ?></td>
                     <td>
                         <form method="POST" action="#"">
-                                <button type="submit" class="btn-default" name="Active" value=<?=$solution['Solution_ID'] ?>>編輯</button>
+                                <button type="submit" class="btn-default" name="Active" value=<?=$solution->id ?>>編輯</button>
                         </form>
                     </td>
                     <td>
                         <form method="POST" action="<?= MPROFILE_URL ?>setsolution.php">
-                            <?php if ($solution['isActive']) { ?>
-                                <button type="submit" class="btn-primary" name="Deactive" value=<?=$solution['Solution_ID'] ?>>下架
-                                </button>
+                            <?php if ($solution->isActive) { ?>
+                                <button type="submit" class="btn-primary" name="Deactive" value=<?=$solution->id ?>>下架</button>
                             <?php } else {
                                 ?>
-                                <button type="submit" class="btn-warning" name="Active" value=<?=$solution['Solution_ID'] ?>>上架
-                                </button>
+                                <button type="submit" class="btn-warning" name="Active" value=<?=$solution->id ?>>上架</button>
                             <?php } ?>
                         </form>
                     </td>
 
                 </tr>
-                <?php
-            }
-            ?>
+                <?php } ?>
             </tbody>
         </table>
     </div>

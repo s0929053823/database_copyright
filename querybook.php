@@ -218,7 +218,7 @@ function getSolutions()
     return $solutions;
 }
 
-function getComment($solutionID)
+function getCommentsBySolutionID($solutionID)
 {
     $link = db_init();
     $comments = array();
@@ -233,7 +233,7 @@ function getComment($solutionID)
     return $comments;
 }
 
-function getTextbook($id)
+function getTextbookByID($id)
 {
     $link = db_init();
     $sql = "SELECT * FROM TEXTBOOK WHERE Textbook_ID = '$id'";
@@ -257,7 +257,7 @@ function getSchools()
     return $schools;
 }
 
-function getSchool($id)
+function getSchoolByID($id)
 {
     $link = db_init();
     mysqli_query($link,"set names 'utf8'");
@@ -268,8 +268,22 @@ function getSchool($id)
     return $school;
 }
 
+function getDepartments()
+{
+    $link = db_init();
+    mysqli_query($link,"set names 'utf8'");
+    $departments = array();
+    $sql = "SELECT * FROM Department ORDER BY name_eng";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法mysqli_fetch_assoc($result)執行查詢: ' . $sql);
+    while ($department = mysqli_fetch_assoc($result)) {
+        array_push($departments,$department);
+    }
+    return $departments;
+}
 
-function getDepartment($id)
+
+function getDepartmentByID($id)
 {
     $link = db_init();
     mysqli_query($link,"set names 'utf8'");
@@ -280,7 +294,7 @@ function getDepartment($id)
     return $department;
 }
 
-function getSchoolDepartments($id)
+function getDepartmentsBySchoolID($id)
 {
     $link = db_init();
     mysqli_query($link,"set names 'utf8'");
@@ -298,7 +312,7 @@ function getSchoolDepartments($id)
     return $departemts;
 }
 
-function getCategory($id)
+function getCategoryByID($id)
 {
     $link = db_init();
     $sql = "SELECT * FROM CATEGORY WHERE '$id' = Category_ID";
@@ -316,7 +330,7 @@ function insertSolution($creater_id, $title, $price, $textbook, $chapter, $descr
 }
 
 
-function getSolution($id)
+function getSolutionByID($id)
 {
     $link = db_init();
     $sql = "SELECT * FROM SOLUTION WHERE '$id' = Solution_ID";
@@ -508,7 +522,7 @@ function insertTransaction($solution,$price,$receipt)
     if (!$result) die ('無法執行查詢: ' . $sql);
 }
 
-function GetReceiptByMemberID($member)
+function getReceiptByMemberID($member)
 {
     $link = db_init();
     $details = array();
@@ -520,7 +534,7 @@ function GetReceiptByMemberID($member)
     return $details;
 }
 
-function getReceiptInfo($receipt)
+function getReceiptByID($receipt)
 {
     $link = db_init();
     $sql = "SELECT * FROM RECEIPT WHERE RECEIPT_ID = '$receipt'";
@@ -608,6 +622,14 @@ function getTraceByMemberID($member)
         array_push($traces, $trace);
     }
     return $traces;
+}
+
+function getAuthorByID($id){
+    $link = db_init();
+    $sql = "SELECT * FROM AUTHOR WHERE AUTHOR_ID = '$id'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return  mysqli_fetch_assoc($result);
 }
 
 function getAuthorsByTextbookID($textbook)

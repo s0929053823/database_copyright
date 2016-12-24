@@ -1,5 +1,5 @@
 <?php
-    $users = getMembers();
+require_once 'model/Member.php';
 ?>
 <div class="table-responsive">
     <table class="table table-striped">
@@ -11,25 +11,20 @@
             <th>CP值</th>
             <th>類型</th>
             <th>E-mail</th>
-
         </tr>
         </thead>
         <tbody>
         <?php
-        foreach ($users as $user) {
-            ?>
+        foreach (Member::GetAll() as $user) { ?>
             <tr>
-                <td><a href="<?=APP_URL?>   profile.php?userid=<?=$user['Member_ID'] ?>"
-                       ?><?=$user['Member_ID'] ?></a></td>
-                <td><?=$user['Account'] ?></td>
-                <td><?=$user['Start_Date'] ?></td>
-                <td><?=$user['Point'] ?></td>
-                <td><?=$userType[$user['Type']] ?></td>
-                <td><?=$user['Email'] ?></td>
+                <td><a href="<?=$user->url?>"?><?=$user->id?></a></td>
+                <td><?=$user->account ?></td>
+                <td><?=$user->start_date ?></td>
+                <td><?=$user->point ?></td>
+                <td><?=$userType[$user->type] ?></td>
+                <td><?=$user->email ?></td>
             </tr>
-            <?php
-        }
-        ?>
+        <?php } ?>
         </tbody>
     </table>
 </div>

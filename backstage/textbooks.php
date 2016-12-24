@@ -1,44 +1,22 @@
 <?php
-$textbooks = getTextbookCategory();
+require_once 'model/Textbook.php';
+require_once 'model/Category.php';
+$actions = Array('showBooks.php');
+$action = isset($_GET['action'])?$_GET['action']:0
 ?>
 <div class="profile-sidebar">
-    <div class="table-responsive">
-        <form action="<?= BACKSTAGE_URL ?>insertBook.php">
-            <button type="submit" class="btn-primary">新增書籍</button>
-        </form>
-
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Book#</th>
-                    <th>Category</th>
-                    <th>Title</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                foreach ($textbooks as $textbook) {
-                    ?>
-                    <tr>
-                        <td><a href="<?=APP_URL?>textbook.php?value=<?=$textbook['Textbook_ID']?>"><?=$textbook['Textbook_ID'] ?> </a></td>
-                        <td><?=$textbook['Category_Name'] ?></td>
-                        <td><?=$textbook['Title'] ?></a></td>
-
-                        <td>
-                            <form method="post" action="<?= BACKSTAGE_URL?>ctrlTextbook.php">
-                                <button type="submit" class="btn-primary" name="editButton" value=<?=$textbook['Textbook_ID'] ?>>修改
-                            </button>
-
-                                <button type="submit" class="btn-primary" name="deleteButton" value=<?=$textbook['Textbook_ID'] ?>>刪除</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php
-                }
-                ?>
-                </tbody>
-            </table>
-        </form>
+    <?php
+    switch ($action) {
+        case 0:
+            include_once 'backstage/textbooks/showBook.php';
+            break;
+        case 1:
+            include_once 'backstage/textbooks/insertBook.php';
+            break;
+        case 2:
+            include_once 'backstage/textbooks/editbook.php';
+            break;
+    }
+    ?>
     </div>
 </div>

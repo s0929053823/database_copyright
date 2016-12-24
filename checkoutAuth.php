@@ -22,6 +22,7 @@ if (isset($_POST['check-button'])) {
         }
     }
 }
+require_once 'model/Solution.php'
 ?>
 
 <div class="col-md-3 col-md-offset-4">
@@ -32,25 +33,24 @@ if (isset($_POST['check-button'])) {
                 <th>Solution</th>
                 <th>Price</th>
                 <th></th>
-
             </tr>
             </thead>
             <tbody>
             <?php
             $total_price=0;
             foreach ($_SESSION['cart_items'] as $item) {
-                $solution = getSolution($item['id']);
+                $solution = Solution::GetByID($item['id']);
                 $total_price+=$item['price'];
                 ?>
                 <tr>
-                    <td> <a href="solution.php?value=<?= $solution['Solution_ID'] ?>"><?= $solution['Title'] ?></a></td>
+                    <td> <a href="solution.php?value=<?= $solution->id ?>"><?= $solution->title?></a></td>
                     <td><?=$item['price'] ?></td>
                 </tr>
                 <?php
             }
             ?>
             <tr>
-                <?php $remainPoint =  $user['Point'] - $total_price ?>
+                <?php $remainPoint =  $user->point - $total_price ?>
                 <td><b>Total: </b></td>
                 <td><b<i><?= $total_price ?></i></b></td>
 
@@ -81,8 +81,6 @@ if (isset($_POST['check-button'])) {
             }
             echo  "</div>";
         }
-
-
         ?>
 
         <div class="logo">Required Login Again</div>
@@ -114,8 +112,5 @@ if (isset($_POST['check-button'])) {
     </div>
     <!-- end:Main Form -->
 </div>
-
-
-
 
 <?php include_once('footer.php') ?>

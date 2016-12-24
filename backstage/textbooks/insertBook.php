@@ -1,29 +1,8 @@
 <?php
-include_once("../config.php");
-include_once('../navigation.php');
-include_once ('../querybook.php');
-$categorys = getCategorys();
+require_once 'model/Category.php';
+$categorys = Category::GetAll();
 ?>
 
-<?php
-
-if (isset($_POST['insert_button'])) {
-    $title = $_POST['title'];
-    $categoryID = $_POST['category'];
-    $isbn10 = $_POST['isbn10'];
-    $isbn13 = $_POST['isbn13'];
-    $edition = $_POST['edition'];
-    $publishYear = $_POST['pyear'];
-    $description = $_POST['description'];
-    $imgSrc = $_POST['image'];
-    insertTextbook($categoryID,$isbn10,$isbn13,$title,$edition,null,$publishYear,$description,$imgSrc);
-    header('location:'.APP_URL.'backstage.php?value=3');
-}
-
-?>
-
-<div class="container">
-    <div class="row main">
         <div class="panel-heading">
             <div class="panel-title text-center">
                 <h1 class="title">Add Textbook</h1>
@@ -31,7 +10,7 @@ if (isset($_POST['insert_button'])) {
             </div>
         </div>
         <div class="main-login main-center">
-            <form class="form-horizontal" method="post" >
+            <form class="form-horizontal" method="post" action="action.php" >
 
                 <div class="form-group">
                     <label for="name" class="cols-sm-2 control-label">Title</label>
@@ -53,8 +32,8 @@ if (isset($_POST['insert_button'])) {
                             <select class="form-control" id="category" name="category">
 
                                 <?php for ($i = 0; $i < count($categorys); $i++) { ?>
-                                    <option value="<?= $categorys[$i]['Category_ID'] ?>"
-                                            selected><?= $categorys[$i]['Category_Name'] ?></option>
+                                    <option value="<?= $categorys[$i]->id ?>"
+                                            selected><?= $categorys[$i]->name ?></option>
 
                                 <?php } ?>
                             </select>
@@ -134,14 +113,8 @@ if (isset($_POST['insert_button'])) {
                 </div>
 
                 <div class="form-group ">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button" name="insert_button">Insert</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button" name="insert_textbook">Insert</button>
                 </div>
 
             </form>
         </div>
-    </div>
-</div>
-
-<?php
-include_once('..\footer.php');
-?>

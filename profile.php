@@ -1,12 +1,13 @@
 <?php include("navigation.php"); ?>
 <?php
 if (isset($_GET['userid'])) {
-    $user = getMember($_GET['userid']);
-    $sd = getSchoolDepartmentByID($user['sd_id']);
+    require_once 'model/SchoolDepartment.php';
+    $user = Member::GetByID($_GET['userid']);
+    $SD = SchoolDepartment::GetByID($user->sd_id);
 
-    if ($sd != null) {
-        $school = getSchool($sd['school_id']);
-        $department = getDepartment($sd['department_id']);
+    if ($SD != null) {
+        $school = School::GetByID($SD->schoolID);
+        $department = Department::GetByID($SD->departmentID);
     }
 
     ?>
@@ -26,20 +27,20 @@ if (isset($_GET['userid'])) {
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
                             <?php
-                            echo $user['Account'];
+                            echo $user->account;
                             ?>
 
                         </div>
                         <?php if (isset($school)) { ?>
                             <div class="profile-usertitle-job">
                                 <?php
-                                echo $school['name_cht'];
+                                echo $school->nameCHT;
                                 ?>
                             </div>
 
                             <div class="profile-usertitle-department">
                                 <?php
-                                echo $department['name_cht'];
+                                echo $department->nameCHT;
                                 ?>
                             </div>
                         <?php } ?>

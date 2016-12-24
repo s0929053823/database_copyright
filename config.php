@@ -13,4 +13,4 @@ $DB_DATABASE = 'test2';
 define('APP_URL', "http://127.0.0.1/nonLaravel/");
 define('MPROFILE_URL', 'myprofile/');
 define('BACKSTAGE_URL', 'backstage/');
-?>
+define('MODEL', 'model/');
