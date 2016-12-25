@@ -15,6 +15,15 @@ class Textbook
         return $result;
     }
 
+    static function GetByPublisherID($publisher){
+        $result = array();
+        $textbooks = getTextbooksByPublisherID($publisher);
+        foreach ($textbooks as $textbook){
+            array_push($result,new Textbook($textbook));
+        }
+        return $result;
+    }
+
     static function GetByID($id){
         return new Textbook(getTextbookByID($id));
     }

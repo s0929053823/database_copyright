@@ -21,12 +21,14 @@
                         </form>
                     </td>
                     <td>
-                        <form method="POST" action="<?= MPROFILE_URL ?>setsolution.php">
+                        <form method="POST" action="action.php">
+                            <input type="text" hidden name="memberID" value=<?=$member->id?>>
+                            <input type="text" hidden name="solutionID" value=<?=$solution->id?>>
                             <?php if ($solution->isActive) { ?>
-                                <button type="submit" class="btn-primary" name="Deactive" value=<?=$solution->id ?>>下架</button>
+                                <button type="submit" class="btn-primary" name="deactive_solution">下架</button>
                             <?php } else {
                                 ?>
-                                <button type="submit" class="btn-warning" name="Active" value=<?=$solution->id ?>>上架</button>
+                                <button type="submit" class="btn-warning" name="active_solution">上架</button>
                             <?php } ?>
                         </form>
                     </td>

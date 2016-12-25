@@ -1,21 +1,10 @@
 <?php include("navigation.php"); ?>
 <?php include("check.php"); ?>
-<?php
-if (isset($_POST['submit-button'])) {
-    $textbook = $_POST['textbook'];
-    $title = $_POST['title'];
-    $price = $_POST['price'];
-    $chapter = $_POST['chapter'];
-    $description = $_POST['description'];
-    insertSolution($_SESSION['user_id'], $title, $price, $textbook, $chapter, $description);
-    header('location: index.php');
-}
 
-
-?>
 <!-- Page Content -->
 <div class="container center_div">
-    <form id="upload-form" class="text-left" method="post">
+    <form id="upload-form" class="text-left" method="post" action="action.php">
+        <input type="text" hidden name="memberID" value="<?=$user->id?>">
         <div class="form-group md">
 
             <label for="email">Title</label>
@@ -84,7 +73,7 @@ if (isset($_POST['submit-button'])) {
             <input type="file" class="form-control-file" id="InputFile">
         </div>
 
-        <button type="submit" class="submit-button" name="submit-button">Submit</button>
+        <button type="submit" class="submit-button" name="insert_solution">Submit</button>
     </form>
 </div>
 <?php include("footer.php"); ?>

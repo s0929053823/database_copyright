@@ -1,11 +1,12 @@
 <?php
 require_once 'model/Author.php';
+require_once 'model/Publisher.php';
 require_once  'model/WritingRelation.php';
 $categorys = Category::GetAll();
 $textBook = Textbook::GetByID($_GET['bookid']);;
 $authors = Author::GetAll();
 $textBookAuthors = WritingRelation::GetAuthorByTextbookID($textBook->id);
-
+$publishers = Publisher::GetAll();
 ?>
 
 
@@ -48,13 +49,32 @@ $textBookAuthors = WritingRelation::GetAuthorByTextbookID($textBook->id);
             </div>
         </div>
 
+        <div class="form-group" >
+            <label for="category" class="cols-sm-2 control-label">Publisher</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <select class="form-control" id="publisher" name="publisher" >
+                        <option value="0">null</option>
+                        <?php for ($i = 0; $i < count($publishers); $i++) {
+                            $publisher = $publishers[$i];
+                            if($textBook->publisher!=null && $publisher->id = $textBook->publisherID) {
+                                echo "<option value=" . $publisher->id . " selected>" . $publisher->companyName. "</option>";
+                            }
+                            else{
+                                echo "<option value=" . $publisher->id . ">" . $publisher->companyName . "</option>";
+                            }
+                        } ?>
+                    </select>
+                </div>
+            </div>
+        </div>
 
         <div class="form-group" >
             <label for="category" class="cols-sm-2 control-label">Category</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope fa"
-                                                                   aria-hidden="true"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                     <select class="form-control" id="category" name="category" >
 
                         <?php for ($i = 0; $i < count($categorys); $i++) {
@@ -101,10 +121,8 @@ $textBookAuthors = WritingRelation::GetAuthorByTextbookID($textBook->id);
             <label for="edition" class="cols-sm-2 control-label">Edition</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="edition" id="edition"
-                           value="<?=$textBook->edition?>" required/>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="edition" id="edition" value="<?=$textBook->edition?>" required/>
                 </div>
             </div>
         </div>
@@ -114,8 +132,7 @@ $textBookAuthors = WritingRelation::GetAuthorByTextbookID($textBook->id);
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="pyear" id="pyear"
-                           value="<?=$textBook->publishYear ?>" required/>
+                    <input type="text" class="form-control" name="pyear" id="pyear" value="<?=$textBook->publishYear ?>" required/>
                 </div>
             </div>
         </div>
@@ -134,7 +151,7 @@ $textBookAuthors = WritingRelation::GetAuthorByTextbookID($textBook->id);
             <label for="pyear" class="cols-sm-2 control-label">Description</label>
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                <textarea maxlength="255" cols="4" class="form-control" name="description" id="description" required><?=$textBook->description ?></textarea>
+                <textarea maxlength="255" class="form-control" name="description" id="description" required><?=$textBook->description ?></textarea>
             </div>
         </div>
 

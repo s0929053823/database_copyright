@@ -16,6 +16,14 @@ class Trace
         return $result;
     }
 
+    static function Insert($memberID,$solutionID){
+        insertTrace($memberID,$solutionID);
+    }
+
+    static function  Delete($memberID,$solutionID){
+        deleteTrace($memberID,$solutionID);
+    }
+
     public function __construct($trace)
     {
        $this->memberID = $trace['Member_ID'];

@@ -3,7 +3,7 @@
     require_once 'model/Solution.php';
 ?>
 
-<h1> My Solutions</h1>
+<h1> My Trace List</h1>
 
 <div class="profile-sidebar">
     <div class="table-responsive">
@@ -23,8 +23,10 @@
                 <tr>
                     <td><a href="<?=$solution->url?>"><?=$solution->title ?></a></td>
                     <td>
-                        <form method="POST" action="<?= MPROFILE_URL ?>tracecontroller.php"">
-                        <button type="submit" class="btn-primary" name="cancel" value=<?=$solution->id ?>>取消</button>
+                        <form method="POST" action="action.php"">
+                        <input type="text" hidden  name= "memberID" value=<?=$member->id?>>
+                        <input type="text" hidden name="solutionID" value=<?=$solution->id?>>
+                        <button type="submit" class="btn-primary" name = "delete_trace">取消</button>
                         </form>
                     </td>
                 </tr>

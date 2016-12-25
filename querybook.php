@@ -326,9 +326,11 @@ function getCategoryByID($id)
 
 function insertSolution($creater_id, $title, $price, $textbook, $chapter, $description)
 {
+
     $link = db_init();
     $sql = "INSERT INTO SOLUTION (Title, Price, Chapter_Number, Textbook_ID, Creater_ID , Description, imgName) VALUES ('$title', '$price', '$chapter','$textbook', '$creater_id', '$description', 'notfound')";
-    mysqli_query($link,$sql);
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
 }
 
 
@@ -710,6 +712,61 @@ function deleteWritingRelation($textbookID,$authorID){
 function deleteWRbyTextbookID($textbookID){
     $link = db_init();
     $sql = "DELETE FROM WRITING_RELATION WHERE Textbook_ID = '$textbookID'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function getPublisherByID($publisher){
+    $link = db_init();
+    $sql = "SELECT * FROM PUBLISHER WHERE PUBLISHER_ID = '$publisher'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    $publisher = mysqli_fetch_assoc($result);
+    return $publisher;
+}
+
+function getPublishers(){
+    $link = db_init();
+    $sql = "SELECT * FROM PUBLISHER";
+    $publishers = array();
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($publisher= mysqli_fetch_assoc($result)) {
+        array_push($publishers, $publisher);
+    }
+    return $publishers;
+}
+
+function insertPublisher($companyName,$oweer,$website,$telphone,$foundDate,$imgSrc,$description){
+    $link = db_init();
+    $sql = "INSERT INTO PUBLISHER (Name, Owner, Website, Telephone, Founded_Date, ImgSrc ,Description) VALUES ('$companyName', '$owenr', '$website', '$telphone', '$foundDate', '$imgSrc','$description')";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+
+}
+
+function updatePublisher($publisher,$companyName,$oweer,$website,$telphone,$foundDate,$imgSrc,$description){
+    $link = db_init();
+    $sql = "UPDATE PUBLISHER SET Name = '$companyName', Owner = '$oweer', Website = '$website', Telephone = '$telphone', Founded_Date = '$foundDate', Description = '$description', ImgSrc = '$imgSrc' WHERE publisher.Publisher_ID = '$publisher'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function getTextbooksByPublisherID($publisher){
+    $link = db_init();
+    $sql = "SELECT * FROM TEXTBOOK WHERE Publisher_ID = '$publisher'";
+    $textbooks = array();
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($textbook= mysqli_fetch_assoc($result)) {
+        array_push($textbooks, $textbook);
+    }
+    return $textbooks;
+}
+
+function deletePublisher($publisher){
+    $link = db_init();
+    $sql = "DELETE FROM PUBLISHER WHERE Publisher_ID = '$publisher'";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
 }

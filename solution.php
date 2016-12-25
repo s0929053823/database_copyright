@@ -15,9 +15,7 @@ $solution = Solution::GetByID($_GET['value']);
 $creator = Member::GetByID($solution->creatorID);
 $textbook = Textbook::GetByID($solution->textbookID);
 $comments = Comment::GetBySolutionID($solution->id);
-
 $avgRate = Rate::GetAverageRateOfSolution($solution->id);
-
 $isActive = $solution->isActive;
 $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],2),2) :'N/A';
 
@@ -38,7 +36,6 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
                 </font>
             </div>
             <h1>
-
                 <?php
                 $isCartEnable ="disabled";
                 $isTraceEnable = "enabled";
@@ -129,7 +126,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
 
             <h3>Reference</h3>
             <ul>
-                <?php if($textbook) {?>
+                <?php if(!$solution->id) {?>
                     <a href ="<?= $textbook->url?>"><h5><?= $textbook->title ?>(<?= $textbook->publishYear ?>)</h5></a>
                 <?php } else { ?>
                     Textbook is deleted
@@ -217,7 +214,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
                 $commentUser=Member::GetByID($comment->memberID);
                 ?>
                 <div class="col-sm-1">
-                    <div class="thumbnail">
+                    <div class="commentThumbnail">
                         <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
                     </div><!-- /thumbnail -->
                 </div><!-- /col-sm-1 -->

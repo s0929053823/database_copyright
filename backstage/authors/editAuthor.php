@@ -27,7 +27,7 @@ $author = Author::GetByID($_GET['authorid']);
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="description" id="description"  value="<?=$author->description ?>"/>
+                    <textarea class="form-control"  maxlength="255" name="description" id="description" value="<?=$author->description ?>"> </textarea>
                 </div>
             </div>
         </div>
@@ -35,11 +35,11 @@ $author = Author::GetByID($_GET['authorid']);
 
 
         <div class="form-group">
-                    <label for="isbn10" class="cols-sm-2 control-label">ImageSource</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="imgSrc" id="imgSrc" placeholder="URL"  value="<?=$author->imgSrc ?>"/>
+            <label for="isbn10" class="cols-sm-2 control-label">ImageSource</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="imgSrc" id="imgSrc" placeholder="URL"  value="<?=$author->imgSrc ?>"/>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@ $author = Author::GetByID($_GET['authorid']);
 
 
         <div class="form-group ">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button" name="edit_author">Confrim</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block login-button" name="edit_author">Confrim</button>
         </div>
 
     </form>

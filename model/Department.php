@@ -9,7 +9,12 @@ class Department
 
     static function GetAll()
     {
-        return getDepartments();
+        $result = array();
+        $departments=  getDepartments();
+        foreach ($departments as $department){
+            array_push($result,new Department($department));
+        }
+        return $result;
     }
 
     static function GetByID($id){

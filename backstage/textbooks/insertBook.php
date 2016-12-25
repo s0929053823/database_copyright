@@ -1,8 +1,10 @@
 <?php
 require_once 'model/Category.php';
 require_once 'model/Author.php';
+require_once 'model/Publisher.php';
 $categorys = Category::GetAll();
 $authors = Author::GetAll();
+$publishers = Publisher::GetAll();
 ?>
 
 <div class="panel-heading">
@@ -41,15 +43,30 @@ $authors = Author::GetAll();
         </div>
 
         <div class="form-group" >
+            <label for="category" class="cols-sm-2 control-label">Publisher</label>
+            <div class="cols-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <select class="form-control" id="publisher" name="publisher" >
+                        <option value="0">null</option>
+                        <?php for ($i = 0; $i < count($publishers); $i++) {
+                                $publisher = $publishers[$i];
+                                echo "<option value=" . $publisher->id . ">" . $publisher->companyName . "</option>";
+                        } ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group" >
             <label for="category" class="cols-sm-2 control-label">Category</label>
             <div class="cols-sm-10">
                 <div class="input-group">
 
                     <select class="selectpicker" id="category" name="category" data-live-search="true" data-live-search="true">
                         <?php for ($i = 0; $i < count($categorys); $i++) { ?>
-                            <option value="<?= $categorys[$i]->id ?>"
-                                    selected><?= $categorys[$i]->name ?></option>
-
+                            <option value="<?= $categorys[$i]->id ?>" selected><?= $categorys[$i]->name ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -62,8 +79,7 @@ $authors = Author::GetAll();
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="isbn10" id="isbn10"
-                           placeholder="ISBN-10" required/>
+                    <input type="text" class="form-control" name="isbn10" id="isbn10" placeholder="ISBN-10" required/>
                 </div>
             </div>
         </div>
@@ -72,10 +88,8 @@ $authors = Author::GetAll();
             <label for="isbn13" class="cols-sm-2 control-label">ISBN-13</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="isbn13" id="isbn13"
-                           placeholder="ISBN-13" required>
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="isbn13" id="isbn13" placeholder="ISBN-13" required>
                 </div>
             </div>
         </div>
@@ -86,10 +100,8 @@ $authors = Author::GetAll();
             <label for="edition" class="cols-sm-2 control-label">Edition</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="edition" id="edition"
-                           placeholder="Enter Edition" required/>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="edition" id="edition" placeholder="Enter Edition" required/>
                 </div>
             </div>
         </div>
@@ -98,10 +110,8 @@ $authors = Author::GetAll();
             <label for="pyear" class="cols-sm-2 control-label">Publish Year</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="pyear" id="pyear"
-                           placeholder="Enter Year" required/>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="pyear" id="pyear" placeholder="Enter Year" required/>
                 </div>
             </div>
         </div>
@@ -110,9 +120,8 @@ $authors = Author::GetAll();
             <label for="description" class="cols-sm-2 control-label">Description</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="description" id="description" required/>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <textarea class="form-control" name="description" id="description"> </textarea>
                 </div>
             </div>
         </div>
@@ -121,10 +130,8 @@ $authors = Author::GetAll();
             <label for="image" class="cols-sm-2 control-label">ImageSource</label>
             <div class="cols-sm-10">
                 <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
-                                                                   aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="image" id="image"
-                           placeholder="Enter URL"/>
+                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" name="image" id="image" placeholder="Enter URL"/>
                 </div>
             </div>
         </div>

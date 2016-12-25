@@ -19,12 +19,24 @@ class Solution
         return new Solution(getSolutionByID($id));
     }
 
+
+    static function Insert($memberID,$title,$price,$textbook,$chapter,$description){
+        insertSolution($memberID, $title, $price, $textbook, $chapter, $description);
+    }
     static function BlockSoltuion($id){
         blockSolution($id);
     }
 
     static function UnblockSolution($id){
         unblockSolution($id);
+    }
+
+    static function ActiveSolution($id){
+        activeSolution($id);
+    }
+
+    static function DeactiveSolution($id){
+        deactiveSolution($id);
     }
 
     static function GetByMemberID($memberID){

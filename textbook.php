@@ -5,10 +5,12 @@ if(!isset($_GET['value'])) {
 }
 require_once 'model/WritingRelation.php';
 require_once 'model/Category.php';
+require_once 'model/Publisher.php';
 $textbook = Textbook::GetByID($_GET['value']);
 if(!$textbook) return;
 $category = Category::GetByID($textbook->categoryID);
 $authors = WritingRelation::GetAuthorByTextbookID($textbook->id);
+$publisher = Publisher::GetByID($textbook->publisher);
 ?>
 <!-- Portfolio Item Row -->
 <div class="row">
@@ -37,7 +39,7 @@ $authors = WritingRelation::GetAuthorByTextbookID($textbook->id);
         </ul>
         <h3>Publisher</h3>
         <ul>
-
+            <h5><a href="<?=$publisher->url?>"> <?=$publisher->companyName?></a></h5>
         </ul>
         <h3>ISBN</h3>
         <ul>

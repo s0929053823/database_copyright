@@ -17,16 +17,25 @@ if(!isset($_SESSION['cart_items'])){
 
     <title>CopyRight - Find Solution</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <link href="<?= APP_URL ?>css/mystyle.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= APP_URL ?>dist/css/bootstrap-select.css">
-    <!-- Custom CSS -->
-    <link href="<?= APP_URL ?>/css/shop-homepage.css" rel="stylesheet">
-    <script src="<?= APP_URL ?>dist/js/bootstrap-select.js"></script>
-
 </head>
+<!-- Bootstrap Core CSS -->
+<link href="<?= APP_URL ?>css/mystyle.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= APP_URL ?>/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?= APP_URL ?>dist/css/bootstrap-select.css">
+<!-- Custom CSS -->
+
+<link href="<?= APP_URL ?>css/shop-homepage.css" rel="stylesheet">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="<?= APP_URL ?>dist/js/bootstrap-select.js"></script>
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+
 <body>
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

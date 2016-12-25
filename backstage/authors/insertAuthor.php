@@ -24,7 +24,7 @@
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" name="description" id="description"/>
+                    <textarea class="form-control"  maxlength="255" name="description" id="description"> </textarea>
                 </div>
             </div>
         </div>
