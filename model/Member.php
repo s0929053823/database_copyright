@@ -6,6 +6,14 @@ class Member
     public $id,$account,$password,$point,$email,$start_date,$type,$birthday,$sd_id ;
     private  $userType = array("管理員", "一般用戶", "高級用戶");
 
+    static function Insert(){
+
+    }
+
+    static function Update($id,$account,$password,$email,$birthday){
+        updateMember($id,$account,$password,$email,$birthday);
+    }
+
     static function GetAll()
     {
         $result = array();
@@ -35,11 +43,6 @@ class Member
         $this->sd_id = $member['sd_id'];
 
     }
-
-    public  function insert(){
-        insertMember($this->id,$this->password,$this->email,$this->sd_id,$this->$this->birthday);
-    }
-
 
 }
 

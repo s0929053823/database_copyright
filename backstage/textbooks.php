@@ -1,7 +1,7 @@
 <?php
 require_once 'model/Textbook.php';
 require_once 'model/Category.php';
-$actions = Array('showBooks.php');
+
 $action = isset($_GET['action'])?$_GET['action']:0
 ?>
 <div class="profile-sidebar">

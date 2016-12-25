@@ -24,6 +24,16 @@ class Textbook
         return $result;
     }
 
+
+    static function GetByCategoryID($category){
+        $result = array();
+        $textbooks = getTextbooksByCategoryID($category);
+        foreach ($textbooks as $textbook){
+            array_push($result,new Textbook($textbook));
+        }
+        return $result;
+    }
+
     static function GetByID($id){
         return new Textbook(getTextbookByID($id));
     }

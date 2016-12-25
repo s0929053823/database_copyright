@@ -14,4 +14,4 @@ else if (isset($_POST['delete_category'])) {
 else if (isset($_POST['edit_category'])) {
     Category::Update($_POST['edit_category'],$_POST['category_name']);
 }
-header('Location: http://127.0.0.1/nonLaravel/backstage.php?value=4');
+header('Location: backstage.php?value=4');

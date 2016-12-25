@@ -18,7 +18,7 @@
     <tbody>
     <?php  $departments = Department::GetAll();?>
     <?php for($i = $pageShowNumber*($page-1);$i<$pageShowNumber*$page ;$i++) {
-        if (count($departments) < $i) break;
+        if (count($departments) <= $i) break;
         $department = $departments[$i];
         ?>
         <tr>

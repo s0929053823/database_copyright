@@ -9,9 +9,20 @@ if(isset($_POST['insert_solution'])){
     $chapter = $_POST['chapter'];
     $description = $_POST['description'];
     Solution::Insert($_POST['memberID'], $title, $price, $textbook, $chapter, $description);
-    //insertSolution($_POST['memberID'], $title, $price, $textbook, $chapter, $description);
     header('location: index.php');
 }
+
+if(isset($_POST['edit_solution'])){
+
+    $textbook = $_POST['textbook'];
+    $title = $_POST['title'];
+    $price = $_POST['price'];
+    $chapter = $_POST['chapter'];
+    $description = $_POST['description'];
+    Solution::Update($_POST['solutionID'],$_POST['memberID'], $title, $price, $textbook, $chapter, $description);
+    header("location: solution.php?value=".$_POST['solutionID']);
+}
+
 
 else if (isset($_POST['block_solution'])) {
     Solution::BlockSoltuion($_POST['block_solution']);

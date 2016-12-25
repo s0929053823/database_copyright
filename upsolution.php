@@ -1,6 +1,5 @@
 <?php include("navigation.php"); ?>
 <?php include("check.php"); ?>
-
 <!-- Page Content -->
 <div class="container center_div">
     <form id="upload-form" class="text-left" method="post" action="action.php">

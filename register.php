@@ -56,7 +56,7 @@ $schools = School::GetAll();
 
                     <div class="form-group">
                         <label for="reg_email" class="sr-only">Email</label>
-                        <input type="text" class="form-control" id="reg_email" name="reg_email" placeholder="email">
+                        <input type="email" class="form-control" id="reg_email" name="reg_email" placeholder="email">
                     </div>
 
                     <div class="form-group">

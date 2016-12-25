@@ -8,10 +8,23 @@ class Rate
 {
     public $memberID,$solutionID,$score;
 
+    static function Insert($memberID,$solutionID,$rate){
+        insertRate($memberID,$solutionID,$rate);
+    }
+
+    static function Delete($memberID,$solutionID){
+        deleteRate($memberID,$solutionID);
+    }
+
+    static function Update($memberID,$solutionID,$rate){
+        updateRate($memberID,$solutionID,$rate);
+    }
+
     static function GetAverageRateOfSolution($solutionID){
         $avgRate = getAverageRate($solutionID);
         return $avgRate;
     }
+
 
     static function GetByMemberID($memberID)
     {
@@ -27,6 +40,7 @@ class Rate
     {
 
     }
+
 
     public function __construct($rate)
     {

@@ -9,4 +9,3 @@ unset($_SESSION['cart_items'][$id]);
 
 // redirect to product list and tell the user it was added to cart
 header('Location: cartview.php');
-?>

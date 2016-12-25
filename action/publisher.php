@@ -30,4 +30,4 @@ else if (isset($_POST['edit_publisher'])) {
 else if (isset($_POST['delete_publisher'])) {
     Publisher::Delete($_POST['delete_publisher']);
 }
-header('Location: http://127.0.0.1/nonLaravel/backstage.php?value=6');
+header('Location: backstage.php?value=6');

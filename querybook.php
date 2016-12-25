@@ -333,6 +333,12 @@ function insertSolution($creater_id, $title, $price, $textbook, $chapter, $descr
     if (!$result) die ('無法執行查詢: ' . $sql);
 }
 
+function updateSolution($solution_id,$creater_id, $title, $price, $textbook, $chapter, $description){
+    $link = db_init();
+    $sql = "UPDATE solution SET Title = '$title', Price = '$price', Chapter_Number = '$chapter', Textbook_ID = '$textbook', Creater_ID = '$creater_id', Description = '$description' WHERE Solution_ID ='$solution_id' ";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
 
 function getSolutionByID($id)
 {
@@ -764,9 +770,28 @@ function getTextbooksByPublisherID($publisher){
     return $textbooks;
 }
 
+function getTextbooksByCategoryID($category){
+    $link = db_init();
+    $sql = "SELECT * FROM TEXTBOOK WHERE Category_ID = '$category'";
+    $textbooks = array();
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($textbook= mysqli_fetch_assoc($result)) {
+        array_push($textbooks, $textbook);
+    }
+    return $textbooks;
+}
+
 function deletePublisher($publisher){
     $link = db_init();
     $sql = "DELETE FROM PUBLISHER WHERE Publisher_ID = '$publisher'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function updateMember($id,$account,$password,$email,$birthday){
+    $link = db_init();
+    $sql = "UPDATE MEMBER SET Account = '$account', Password = '$password', Email = '$email', Birthday = '$birthday' WHERE Member_ID = '$id'";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
 }

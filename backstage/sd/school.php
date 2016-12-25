@@ -17,7 +17,7 @@
     $page = isset($_GET['pages'])?$_GET['pages']:1;
     $schools = School::GetAll();
     for($i = $pageShowNumber*($page-1);$i<$pageShowNumber*$page ;$i++) {
-    if (count($schools) < $i) break;
+    if (count($schools) <= $i) break;
     $school = $schools[$i] ;?>
         <tr>
             <td><div id="cid<?= $school->id ?>" contenteditable><?= $school->nameCHT?></div></td>

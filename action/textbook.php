@@ -43,5 +43,5 @@ else if (isset($_POST['edit_textbook'])){
 else if (isset($_POST['delete_textbook'])) {
     Textbook::Delete($_POST['delete_textbook']);
 }
-header('Location: http://127.0.0.1/nonLaravel/backstage.php?value=3');
+header('Location: backstage.php?value=3');
 

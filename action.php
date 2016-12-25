@@ -6,7 +6,10 @@ if(isset($_POST['insert_textbook'])||isset($_POST['edit_textbook'])||isset($_POS
 else if(isset($_POST['insert_category'])||isset($_POST['delete_category'])||isset($_POST['edit_category'])) {
     include_once 'action/category.php';
 }
-else if(isset($_POST['insert_solution'])||isset($_POST['block_solution'])||isset($_POST['unblock_solution'])||isset($_POST['deactive_solution'])||isset($_POST['active_solution'])){
+else if(isset($_POST['insert_member'])||isset($_POST['edit_member'])){
+    include_once 'action/member.php';
+}
+else if(isset($_POST['insert_solution'])||isset($_POST['edit_solution'])||isset($_POST['block_solution'])||isset($_POST['unblock_solution'])||isset($_POST['deactive_solution'])||isset($_POST['active_solution'])){
     include_once 'action/solution.php';
 }
 else if(isset($_POST['insert_author'])||isset($_POST['edit_author'])||isset($_POST['delete_author'])){
@@ -15,6 +18,9 @@ else if(isset($_POST['insert_author'])||isset($_POST['edit_author'])||isset($_PO
 else if(isset($_POST['insert_publisher'])||isset($_POST['edit_publisher'])||isset($_POST['delete_publisher'])){
     include_once 'action/publisher.php';
 }
-else if(isset($_POST['insert_trace'])||isset($_POST['delete_trace'])){
+else if(isset($_POST['insert_trace_from_sol'])||isset($_POST['delete_trace_from_sol'])||isset($_POST['delete_trace'])){
     include_once 'action/trace.php';
+}
+else if(isset($_POST['insert_rate'])||isset($_POST['edit_rate'])||isset($_POST['delete_rate'])){
+    include_once 'action/rate.php';
 }

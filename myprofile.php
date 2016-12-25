@@ -49,12 +49,10 @@ $member = Member::GetByID($_SESSION['user_id']);
             </div>
         </div>
         <div class="col-md-9">
-            <div class="profile-sidebar">
                 <?php
                 $url = MPROFILE_URL.$sites[$sideValue].'.php';
                 include_once($url);
                 ?>
-            </div>
         </div>
     </div>
 </div>

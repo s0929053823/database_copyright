@@ -103,15 +103,18 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
                 <?php
                 $traceAction= "#";
                 if ($traceText=="trace it"){
-                    $traceAction = "add";
+                    $traceAction = "insert_trace_from_sol";
                 }
                 else{
-                    $traceAction = "delete";
+                    $traceAction = "delete_trace_from_sol";
                 }
                 ?>
-                <a href="tracecontroller.php?action=<?=$traceAction?>&value=<?= $_GET['value'] ?>" class='btn btn-success <?=$isTraceEnable?>'>
-                    <span class='glyphicon glyphicon-plus'></span> <?=$traceText?>
-                </a>
+                <form method="POST" action="action.php">
+                    <input type="text" hidden value="<?=$user->id?>" name="memberID">
+                    <input type="text" hidden value="<?=$solution->id?>" name="solutionID">
+                    <button type="submit" class="btn btn-success <?=$isTraceEnable ?>"name="<?= $traceAction ?>" ><span class='glyphicon glyphicon-plus'></span> <?=$traceText?></button>
+                </form>
+
         </div>
     </div>
     <!-- /.row -->
@@ -126,7 +129,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
 
             <h3>Reference</h3>
             <ul>
-                <?php if(!$solution->id) {?>
+                <?php if($solution->textbookID) {?>
                     <a href ="<?= $textbook->url?>"><h5><?= $textbook->title ?>(<?= $textbook->publishYear ?>)</h5></a>
                 <?php } else { ?>
                     Textbook is deleted
@@ -164,7 +167,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
                     ?>
 
                     <div class="col-md-12">
-                        <form method="POST" action="rate.php">
+                        <form method="POST" action="action.php">
                             <input type='hidden' name='solution' value='<?= $solution->id ?>'/>
                             <input type='hidden' name='user' value='<?= $user->id ?>'/>
                             <?php if(!$rate) { ?>
@@ -172,7 +175,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
                                     <input type="text" class="rating rating-loading" name="rate" value="2" data-size="xs" title="">
                                 </div>
                                 <div class="col-md-5">
-                                    <button type="submit" class="btn btn-primary active"name="rate_sumbit">我要評分</button>
+                                    <button type="submit" class="btn btn-primary active"name="insert_rate">我要評分</button>
                                 </div>
                             <?php }
                             else { ?>
@@ -201,7 +204,6 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
             <ul>
                 <p><?= $solution->description ?></p>
             </ul>
-
         </div>
     </div>
 
@@ -310,8 +312,6 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
 
 <hr>
 
-<?php
-include('footer.php');
-?>
-</div>
+<?php include('footer.php'); ?>
+
 

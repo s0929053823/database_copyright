@@ -19,6 +19,9 @@ class Solution
         return new Solution(getSolutionByID($id));
     }
 
+    static function Update($id,$memberID,$title,$price,$textbook,$chapter,$description){
+        updateSolution($id,$memberID,$title,$price,$textbook,$chapter,$description);
+    }
 
     static function Insert($memberID,$title,$price,$textbook,$chapter,$description){
         insertSolution($memberID, $title, $price, $textbook, $chapter, $description);
