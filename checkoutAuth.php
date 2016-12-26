@@ -1,6 +1,7 @@
 <?php include_once('navigation.php') ?>
 
 <?php
+require_once 'model/Discount.php';
 if(!isset($_SESSION['cart_items']))
 {
     header('location: cartview.php');
@@ -32,6 +33,7 @@ require_once 'model/Solution.php'
             <tr>
                 <th>Solution</th>
                 <th>Price</th>
+                <th>Description</th>
                 <th></th>
             </tr>
             </thead>
@@ -40,11 +42,19 @@ require_once 'model/Solution.php'
             $total_price=0;
             foreach ($_SESSION['cart_items'] as $item) {
                 $solution = Solution::GetByID($item['id']);
-                $total_price+=$item['price'];
+                $price  =  floor($solution->discountRate * $solution->price/100);
+                $description = ($solution->discountID!=null)?Discount::GetByID($solution->discountID)->description:"";
+
+                if($description!=""){
+                    $rate = $solution->discountRate/10;
+                    $description = "因打折活動"."'$description'"."，所以該物品打".$rate."折";
+                }
+                $total_price+=$price;
                 ?>
                 <tr>
                     <td> <a href="solution.php?value=<?= $solution->id ?>"><?= $solution->title?></a></td>
-                    <td><?=$item['price'] ?></td>
+                    <td><?=$price ?></td>
+                    <td><?=$description ?></td>
                 </tr>
                 <?php
             }
@@ -58,6 +68,7 @@ require_once 'model/Solution.php'
             <tr>
                 <td><b>Remain </b></td>
                 <td><b<i><?= $remainPoint ?></i></b></td>
+                <td></td>
             </tr>
             </tbody>
         </table>

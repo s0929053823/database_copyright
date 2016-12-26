@@ -1,7 +1,9 @@
 <?php
 require_once 'config.php';
 require_once 'querybook.php';
+require_once 'textbook.php';
 require_once 'model/Member.php';
+require_once 'model/WritingRelation.php';
 class Solution
 {
     public $id,$isActive,$isForbidden,$title,$price,$chapterNo,$textbookID,$creatorID,$createDate,$description;
@@ -69,9 +71,23 @@ class Solution
         $this->creatorID = $solution['Creater_ID'];
         $this->createDate = $solution['Create_Date'];
         $this->description = $solution['Description'];
+        $this->discountRate = 100;
+        $this->discountID = null;
+        $this->getMinRate();
+
     }
 
-
+    public function getMinRate (){
+        $textbook=Textbook::GetByID($this->textbookID);
+        $authors = WritingRelation::GetAuthorByTextbookID($textbook->id);
+        $discounts = getDiscountBySolution($textbook->publisher,$authors,$textbook->id);
+        foreach ($discounts as $discount){
+            if($this->discountRate>$discount['Rate']){
+                $this->discountRate = $discount['Rate'];
+                $this->discountID = $discount['Discount_ID'];
+            }
+        }
+    }
 
 }
 

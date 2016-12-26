@@ -20,13 +20,17 @@ class Discount
         return $result;
     }
 
-    static function Insert($description,$s_time,$e_time,$rate){
-        insertDiscount($description,$s_time,$e_time,$rate);
-
+    static function Insert($description,$s_time,$e_time,$rate,$type,$dependent){
+        $id = insertDiscount($description,$s_time,$e_time,$rate);
+        setDiscount($type,$id,$dependent);
     }
 
-    static function GetByID(){
+    static function Delete($id){
+        deleteDiscount($id);
+    }
 
+    static function GetByID($id){
+        return new Discount(getDiscountByID($id));
     }
 
     public function __construct($discount)

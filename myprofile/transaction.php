@@ -54,6 +54,7 @@ else {
                 <tr>
                     <th>SolutionID</th>
                     <th>Price</th>
+                    <th>Description</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,6 +64,7 @@ else {
                     <tr>
                         <td><a href="<?=Solution::getURL($detail->solutionID)?>"><?=$detail->solutionTitle ?></a></td>
                         <td><?=$detail->transactionPrice ?></td>
+                        <td><?=$detail->description?></td>
                     </tr>
                     <?php
                 }
@@ -70,10 +72,12 @@ else {
                 <tr>
                     <td>Total</td>
                     <td><?=$receipt->total ?></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>Remained Point</td>
                     <td><?=$receipt->amount?></td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>

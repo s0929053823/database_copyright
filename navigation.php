@@ -52,24 +52,29 @@ if(!isset($_SESSION['cart_items'])){
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">Solutions</a>
-                </li>
-                <li>
-                    <a href="#">Textbooks</a>
-                </li>
-                <li>
-                    <a href="#">Authors</a>
-                </li>
-                <li>
-                    <a href="#">Schools</a>
-                </li>
-                <li>
-                    <a href="#">Publishers</a>
-                </li>
-            </ul>
 
+<!--            <div class="col-xs-8 col-xs-offset-2">-->
+<!--                <div class="input-group">-->
+<!--                    <div class="input-group-btn search-panel">-->
+<!--                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+<!--                            <span id="search_concept">Filter by</span> <span class="caret"></span>-->
+<!--                        </button>-->
+<!--                        <ul class="dropdown-menu" role="menu">-->
+<!--                            <li><a href="#contains">Contains</a></li>-->
+<!--                            <li><a href="#its_equal">It's equal</a></li>-->
+<!--                            <li><a href="#greather_than">Greather than ></a></li>-->
+<!--                            <li><a href="#less_than">Less than < </a></li>-->
+<!--                            <li class="divider"></li>-->
+<!--                            <li><a href="#all">Anything</a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    <input type="hidden" name="search_param" value="all" id="search_param">-->
+<!--                    <input type="text" class="form-control" name="x" placeholder="Search term...">-->
+<!--                    <span class="input-group-btn">-->
+<!--                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+<!--                </span>-->
+<!--                </div>-->
+<!--            </div>-->
             <ul class="nav navbar-nav navbar-right">
 
                 <?php
@@ -119,3 +124,16 @@ if(!isset($_SESSION['cart_items'])){
 </nav>
 
 </body>
+
+
+<script>
+    $(document).ready(function(e){
+        $('.search-panel .dropdown-menu').find('a').click(function(e) {
+            e.preventDefault();
+            var param = $(this).attr("href").replace("#","");
+            var concept = $(this).text();
+            $('.search-panel span#search_concept').text(concept);
+            $('.input-group #search_param').val(param);
+        });
+    });
+</script>

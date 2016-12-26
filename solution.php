@@ -143,7 +143,17 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
             </ul>
             <h3>Price</h3>
             <ul>
-                <h2>$ <?= $solution->price ?></h2>
+
+                <?php
+                if($solution->discountRate!=100){
+                    $newPrice=$solution->price*$solution->discountRate/100;
+                    echo " <del><h5>$  $solution->price </h5></del>";
+                    echo "<h2><font color=\"red\" >$ $newPrice </font></h2>";
+                }
+                else{
+                    echo " <h2>$  $solution->price </h2><";
+                }
+                ?>
             </ul>
             <h3>Rate</h3>
             <ul>

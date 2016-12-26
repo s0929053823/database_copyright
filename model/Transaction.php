@@ -6,6 +6,10 @@ class Transaction
 {
     public $id,$solutionID,$price,$quantity,$receiptID,$description;
 
+    static function Insert($solutionID,$price,$receiptID,$description){
+        insertTransaction($solutionID,$price,$receiptID,$description);
+    }
+
     public function __construct($receipt)
     {
         $this->id = $receipt['Receipt_ID'];

@@ -9,7 +9,7 @@ require_once 'querybook.php';
  */
 class V_ReceiptDetail
 {
-    public $receiptID,$buyerID,$account,$solutionID,$solutionTitle,$transactionPrice;
+    public $receiptID,$buyerID,$account,$solutionID,$solutionTitle,$transactionPrice,$description;
 
     static function GetByReceiptID($receiptID){
         $result = array();
@@ -28,6 +28,7 @@ class V_ReceiptDetail
         $this->solutionID = $v_receipt['Solution_ID'];
         $this->solutionTitle= $v_receipt['Title'];
         $this->transactionPrice = $v_receipt['Price'];
+        $this->description = $v_receipt['Description'];
     }
 
 

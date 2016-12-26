@@ -11,11 +11,11 @@ $type = isset($_GET['type'])?$_GET['type']:0;
 <div class="main-login main-center">
     <form class="form-horizontal" method="post" action="action.php" >
         <div class="form-group" >
-            <label for="category" class="cols-sm-2 control-label">種類</label>
+            <label for="category" class="cols-sm-2 control-label">種類*</label>
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <select class="form-control" id="type" name="type"onchange="changeType(document.getElementById('type').value)">
+                    <select class="form-control" id="type" name="type" required onchange="changeType(document.getElementById('type').value)" >
                         <?php for ($i = 0; $i < count($discountType); $i++) {
                             if($type==$i) {
                                 echo "<option selected value=" . $i . ">" . $discountType[$i] . "</option>";
@@ -30,11 +30,11 @@ $type = isset($_GET['type'])?$_GET['type']:0;
         </div>
 
         <div class="form-group" >
-            <label for="category" class="cols-sm-2 control-label">依據</label>
+            <label for="category" class="cols-sm-2 control-label">依據*</label>
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                    <select class="form-control" id="dependent" name="dependent" >
+                    <select class="form-control" required id="dependent" name="dependent" >
                         <?php
                         if($type==0){
                             $publishers = Publisher::GetAll();
@@ -62,7 +62,7 @@ $type = isset($_GET['type'])?$_GET['type']:0;
         </div>
 
         <div class="form-group">
-            <label for="name" class="cols-sm-2 control-label">活動名稱</label>
+            <label for="name" class="cols-sm-2 control-label">活動名稱*</label>
             <div class="cols-sm-10">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>

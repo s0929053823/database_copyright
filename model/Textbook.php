@@ -4,7 +4,7 @@ require_once 'querybook.php';
 
 class Textbook
 {
-    public $id,$categoryID,$title,$imgSrc,$ISBN10,$ISBN13,$edition,$publisherID,$publishYear,$description;
+    public $id,$categoryID,$title,$imgSrc,$ISBN10,$ISBN13,$edition,$publisher,$publishYear,$description;
     static function GetAll()
     {
         $result = array();

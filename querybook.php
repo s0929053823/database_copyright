@@ -535,10 +535,10 @@ function insertAndGetReceiptID($member, $total, $amount, $destination)
 }
 
 
-function insertTransaction($solution,$price,$receipt)
+function insertTransaction($solution,$price,$receipt,$description)
 {
     $link = db_init();
-    $sql = "INSERT INTO TRANSACTION (Solution_ID,Price,Receipt_ID) VALUES ('$solution','$price','$receipt')";
+    $sql = "INSERT INTO TRANSACTION (Solution_ID,Price,Receipt_ID,Description) VALUES ('$solution','$price','$receipt','$description')";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
 }
@@ -835,8 +835,34 @@ function insertDiscount($description,$s_time,$e_time,$rate){
     else{
             $lastID =  mysqli_insert_id($link) ;
             return $lastID;
-
     }
+}
+
+function deleteDiscount($id){
+    $link = db_init();
+    $sql = "DELETE FROM DISCOUNT_RECORD WHERE Discount_ID = '$id'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function setDiscount($type,$discount,$dependent){
+    $link = db_init();
+
+    echo $type;
+
+    if($type==0){
+        $table = "PUBLISHER_DISCOUNT";
+    }
+    else if($type==1){
+        $table = "AUTHOR_DISCOUNT";
+    }
+    else if($type==2){
+        $table = "TEXTBOOK_DISCOUNT";
+    }
+    $sql = "INSERT INTO $table VALUES ('$discount','$dependent')";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+
 }
 
 function getDiscountType($discount){
@@ -845,4 +871,34 @@ function getDiscountType($discount){
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
     return mysqli_fetch_assoc($result);
+}
+
+function getDiscountByID($id){
+    $link = db_init();
+    $sql = "SELECT * FROM DISCOUNT_RECORD WHERE Discount_ID = '$id'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return mysqli_fetch_assoc($result);
+}
+
+function getDiscountBySolution($publisher,$authors,$textbook){
+    $link = db_init();
+    $authorSql="";
+    if($publisher==null)$publisher=0;
+    if($authors!=null){
+        foreach ($authors as $author)
+        {
+            $authorSql = $authorSql."||Author_ID="."'$author->id'";
+        }
+    }
+    if($textbook==null)$textbook=0;
+    $discounts = array();
+    $sql = "SELECT * FROM V_Discount WHERE Publisher_ID='$publisher'".$authorSql."||Textbook_ID='$textbook'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+
+    while ($discount= mysqli_fetch_assoc($result)) {
+        array_push($discounts, $discount);
+    }
+    return $discounts;
 }

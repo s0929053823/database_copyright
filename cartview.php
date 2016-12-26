@@ -2,6 +2,7 @@
 <?php include("check.php"); ?>
 <?php
 require_once 'model/Solution.php';
+require_once 'model/Discount.php';
 if(!isset($_SESSION['cart_items'])){
     $cart_count = 0;
 }else{
@@ -35,12 +36,19 @@ if($cart_count>0){
                     $total_price=0;
                     foreach ($_SESSION['cart_items'] as $item) {
                         $solution = Solution::GetByID($item['id']);
-                        $total_price+=$item['price'];
+                        $price  =  floor($solution->discountRate * $solution->price/100);
+                        $description = ($solution->discountID!=null)?Discount::GetByID($solution->discountID)->description:"";
+
+                        if($description!=""){
+                            $rate = $solution->discountRate/10;
+                            $description = "因打折活動"."'$description'"."，所以該物品打".$rate."折";
+                        }
+                        $total_price+=$price;
                         ?>
                         <tr>
                             <td> <a href="<?= $solution->url ?>"><?= $solution->title ?></a></td>
-                            <td><?=$item['price']?></td>
-                            <td></td>
+                            <td><?=$price?></td>
+                            <td><?=$description?></td>
                             <td>
                                 <a href="removeFromCart.php?id=<?=$solution->id?>"class='btn btn-danger'>
                                     <span class='glyphicon glyphicon-remove'></span> Remove from cart

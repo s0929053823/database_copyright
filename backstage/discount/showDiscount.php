@@ -8,6 +8,7 @@
         <tr>
             <th>Discount#</th>
             <th>Description</th>
+            <th>Rate</th>
             <th>種類</th>
             <th>依據</th>
             <th>Start</th>
@@ -22,6 +23,7 @@
             <tr>
                 <td><?= $discount->id?></td>
                 <td><?=$discount->description ?></td>
+                <td><?=$discount->rate/100?></td>
                 <td><?=$discountType[$discount->type] ?></td>
                 <td>
                     <?php
@@ -43,10 +45,6 @@
                 <td><?=$discount->startDate ?></td>
                 <td><?=$discount->endDate ?></td>
                 <td>
-                    <form method="post" action="controller/backstage/AuthorController.php">
-                        <button type="submit" class="btn-warning" name="editButton" value=<?=$discount->id?>>修改
-                        </button>
-                    </form>
                     <form method="post" action="action.php">
                         <button type="submit" class="btn-primary" name="delete_discount" value=<?=$discount->id?>>刪除</button>
                     </form>
