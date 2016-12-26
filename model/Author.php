@@ -16,6 +16,10 @@ class Author
         return $result;
     }
 
+    static function GetURL($id){
+        return APP_URL."author.php?value=".$id;
+    }
+
     static function Insert($name,$description,$imgSrc){
         insertAuthor($name,$description,$imgSrc);
     }

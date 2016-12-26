@@ -3,7 +3,7 @@ require_once 'config.php';
 require_once 'querybook.php';
 class Member
 {
-    public $id,$account,$password,$point,$email,$start_date,$type,$birthday,$sd_id ;
+    public $id,$account,$password,$point,$email,$start_date,$type,$birthday,$sd_id,$img ;
     private  $userType = array("管理員", "一般用戶", "高級用戶");
 
     static function Insert(){
@@ -41,6 +41,7 @@ class Member
         $this->type = $member['Type'];
         $this->birthday = $member['Birthday'];
         $this->sd_id = $member['sd_id'];
+        $this->img = "https://ssl.gstatic.com/accounts/ui/avatar_2x.png";
 
     }
 

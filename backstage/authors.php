@@ -18,4 +18,3 @@ $action = isset($_GET['action'])?$_GET['action']:0
     }
     ?>
 </div>
-</div>

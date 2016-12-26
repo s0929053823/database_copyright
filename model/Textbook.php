@@ -24,7 +24,9 @@ class Textbook
         return $result;
     }
 
-
+    static function GetURL($id){
+        return APP_URL."textbook.php?value=".$id;
+    }
     static function GetByCategoryID($category){
         $result = array();
         $textbooks = getTextbooksByCategoryID($category);

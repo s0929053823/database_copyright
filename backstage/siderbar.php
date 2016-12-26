@@ -1,10 +1,9 @@
 <?php
 
 $member = getMember($_SESSION['user_id']);
-if (!isAdmin($member['Member_ID'])) {
+if (!isAdmin($user->id)) {
     header('location: adminwarning.php');
 }
-
 $sidebarValue = isset($_GET['value'])?$_GET['value']:0;
 
 ?>
@@ -12,14 +11,14 @@ $sidebarValue = isset($_GET['value'])?$_GET['value']:0;
     <div class="profile-sidebar">
         <!-- SIDEBAR USERPIC -->
         <div class="profile-userpic">
-            <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg"
+            <img src="<?=$user->img ?>"
                  class="img-responsive" alt="">
         </div>
         <!-- END SIDEBAR USERPIC -->
         <!-- SIDEBAR USER TITLE -->
         <div class="profile-usertitle">
             <div class="profile-usertitle-name">
-                <h3>Hello Admin <?=$member['Account'] ?></h3>
+                <h3>Hello Admin <?=$user->account ?></h3>
             </div>
         </div>
         <!-- END SIDEBAR USER TITLE -->

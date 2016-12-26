@@ -432,7 +432,7 @@ function getSearchResult($value)
 {
     $link = db_init();
     $solutions = array();
-    $sql = "SELECT * FROM solution WHERE solution.isActive = true and (solution.Title LIKE '%$value%' OR solution.Description LIKE '%$value%')";
+    $sql = "SELECT * FROM solution WHERE solution.isActive = true and solution.isForbidden=false  and (solution.Title LIKE '%$value%' OR solution.Description LIKE '%$value%')";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
     while ($solution = mysqli_fetch_assoc($result)) {
@@ -445,6 +445,17 @@ function getAverageRate($solution)
 {
     $link = db_init();
     $sql = "SELECT AVG(Score) as Average,COUNT(*) as Number FROM RATE WHERE Solution_ID = '$solution'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    $avgRate = mysqli_fetch_assoc($result);
+    return $avgRate;
+}
+
+
+function getMemberAverageRate($member)
+{
+    $link = db_init();
+    $sql = "SELECT AVG(Score) as Average FROM v_solutionrate WHERE Creater_ID = '$member'";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
     $avgRate = mysqli_fetch_assoc($result);
@@ -794,4 +805,44 @@ function updateMember($id,$account,$password,$email,$birthday){
     $sql = "UPDATE MEMBER SET Account = '$account', Password = '$password', Email = '$email', Birthday = '$birthday' WHERE Member_ID = '$id'";
     $result = mysqli_query($link,$sql);
     if (!$result) die ('無法執行查詢: ' . $sql);
+}
+
+function getNumberOfPeopleBuy($member){
+    $link = db_init();
+    $sql ="SELECT COUNT(*) FROM v_transaction_creator WHERE Member_ID='$member'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return mysqli_fetch_assoc($result);
+}
+
+function getDiscounts(){
+    $link = db_init();
+    $sql = "SELECT * FROM DISCOUNT_RECORD";
+    $discounts = array();
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    while ($discount= mysqli_fetch_assoc($result)) {
+        array_push($discounts, $discount);
+    }
+    return $discounts;
+}
+
+function insertDiscount($description,$s_time,$e_time,$rate){
+    $link = db_init();
+    $sql = "INSERT INTO DISCOUNT_RECORD (Start_Date, Rate, End_Date, Description) VALUES ('$s_time', '$rate', '$e_time', '$description')";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    else{
+            $lastID =  mysqli_insert_id($link) ;
+            return $lastID;
+
+    }
+}
+
+function getDiscountType($discount){
+    $link = db_init();
+    $sql = "SELECT * FROM V_Discount WHERE Discount_ID = '$discount'";
+    $result = mysqli_query($link,$sql);
+    if (!$result) die ('無法執行查詢: ' . $sql);
+    return mysqli_fetch_assoc($result);
 }

@@ -24,3 +24,6 @@ else if(isset($_POST['insert_trace_from_sol'])||isset($_POST['delete_trace_from_
 else if(isset($_POST['insert_rate'])||isset($_POST['edit_rate'])||isset($_POST['delete_rate'])){
     include_once 'action/rate.php';
 }
+else if(isset($_POST['insert_discount'])||isset($_POST['edit_discount'])||isset($_POST['delete_discount'])){
+    include_once 'action/discount.php';
+}

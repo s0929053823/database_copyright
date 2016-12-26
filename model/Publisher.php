@@ -23,6 +23,10 @@ class Publisher
         deletePublisher($id);
     }
 
+    static function GetURL($id){
+        return  APP_URL."publisher.php?value=".$id;
+    }
+
     static function Update($id,$companyName,$owner,$website,$telephone,$foundDate,$imgSrc,$description){
 
         updatePublisher($id,$companyName,$owner,$website,$telephone,$foundDate,$imgSrc,$description);

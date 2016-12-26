@@ -1,5 +1,8 @@
 <?php
 include("navigation.php");
+require_once 'model/Member.php';
+require_once 'model/Textbook.php';
+require_once 'model/Solution.php';
 $solutions = getSearchResult($_GET['value']);
 ?>
 
@@ -18,22 +21,23 @@ $solutions = getSearchResult($_GET['value']);
 
     <?php
     foreach ($solutions as $solution) {
-            $creator = getMember($solution['Creater_ID']);
-            $textbook = getTextbookByID($solution['Textbook_ID']);
+            $solution = Solution::GetByID($solution['Solution_ID']);
+            $creator = Member::GetByID($solution->creatorID);
+            $textbook = Textbook::GetByID($solution->textbookID);
         ?>
         <div class="row">
-            <div class="col-md-7">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x300" alt="">
-                </a>
-            </div>
             <div class="col-md-5">
 
-                <h2><?=$solution['Title']?></h2>
-                <h3><?=$textbook['Title']?></h3>
-                <h4><a href="profile.php?userid=<?=$creator['Member_ID']?>">Creator : <?=$creator['Account'] ?> </a></h4>
-                <a class="btn btn-primary" href="solution.php?value=<?= $solution['Solution_ID'] ?>">View Solution</a>
-                <h1 style="color:red"> $<?= $solution['Price']?></h1>
+                    <img class="img-responsive" src="<?= $textbook->imgSrc?>" alt=""  height="300" width="300">
+
+            </div>
+            <div class="col-md-7">
+
+                <h2><?=$solution->title?></h2>
+                <h3><?=$textbook->title?></h3>
+                <h4><a href="profile.php?userid=<?=$creator->id?>">Creator : <?=$creator->account ?> </a></h4>
+                <a class="btn btn-primary" href="solution.php?value=<?= $solution->id ?>">View Solution</a>
+                <h1 style="color:red"> $<?= $solution->price?></h1>
             </div>
         </div>
         <!-- /.row -->

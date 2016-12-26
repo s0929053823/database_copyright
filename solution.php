@@ -217,7 +217,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
                 ?>
                 <div class="col-sm-1">
                     <div class="commentThumbnail">
-                        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        <img class="img-responsive user-photo" src="<?=$commentUser->img?>">
                     </div><!-- /thumbnail -->
                 </div><!-- /col-sm-1 -->
 
@@ -247,6 +247,7 @@ $avgValue = ($avgRate['Average']!=null)?number_format(round($avgRate['Average'],
 <div class="row">
     <div class="col-md-12">
         <h3>I Want to Comment </h3>
+        <h5>一言既出，駟馬難追，請謹慎留言!</h5>
         <?php if ($inCommentEnable) { ?>
             <form action='comment.php' method="post">
                 <div class="col-md-8">

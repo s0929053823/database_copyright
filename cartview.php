@@ -42,7 +42,7 @@ if($cart_count>0){
                             <td><?=$item['price']?></td>
                             <td></td>
                             <td>
-                                <a href="removeFromCart.php?id=<?=$id?>"class='btn btn-danger'>
+                                <a href="removeFromCart.php?id=<?=$solution->id?>"class='btn btn-danger'>
                                     <span class='glyphicon glyphicon-remove'></span> Remove from cart
                                 </a>
                             </td>

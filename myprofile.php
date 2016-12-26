@@ -16,20 +16,16 @@ $member = Member::GetByID($_SESSION['user_id']);
             <div class="profile-sidebar">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg"
-                         class="img-responsive" alt="">
+                    <img src="<?=$user->img?>" class="img-responsive" alt="">
                 </div>
 
 
-                <!-- END SIDEBAR USERPIC -->
-                <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">
                         <?=$member->account?>
                     </div>
                 </div>
-                <!-- END SIDEBAR USER TITLE -->
-                <!-- SIDEBAR MENU -->
+
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <?php for($i=0;$i<count($sidebars);$i++) {
@@ -45,7 +41,6 @@ $member = Member::GetByID($_SESSION['user_id']);
                         } ?>
                     </ul>
                 </div>
-                <!-- END MENU -->
             </div>
         </div>
         <div class="col-md-9">

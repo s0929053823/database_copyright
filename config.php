@@ -10,6 +10,8 @@ $DB_PASSWORD = '';
 $DB_HOST = '127.0.0.1';
 $DB_DATABASE = 'test2';
 
+date_default_timezone_set('Asia/Taipei');
+
 define('APP_URL', "http://127.0.0.1/nonLaravel/");
 define('MPROFILE_URL', 'myprofile/');
 define('BACKSTAGE_URL', 'backstage/');

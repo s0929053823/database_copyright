@@ -25,12 +25,6 @@ class Rate
         return $avgRate;
     }
 
-
-    static function GetByMemberID($memberID)
-    {
-
-    }
-
     static function GetBySolutionID($soltuionID)
     {
 
